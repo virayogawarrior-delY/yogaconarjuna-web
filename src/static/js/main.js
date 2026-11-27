@@ -228,7 +228,8 @@
     var toggles = document.querySelectorAll('[data-song-toggle]');
     var saved = {};
     try { saved = JSON.parse(sessionStorage.getItem(KEY)) || {}; } catch (e) {}
-    function save(p) { try { sessionStorage.setItem(KEY, JSON.stringify({ playing: p, t: au ? au.currentTime : (saved.t || 0), stopped: !p })); } catch (e) {} }
+    var stopped = !!saved.stopped;   // solo cuenta como «parada» si la persona la pausó con el botón
+    function save(p) { try { sessionStorage.setItem(KEY, JSON.stringify({ playing: p, t: au ? au.currentTime : (saved.t || 0), stopped: stopped })); } catch (e) {} }
     function ui(p) {
       sw.classList.toggle('on', p); sw.classList.remove('resume');
       sb.setAttribute('aria-pressed', p ? 'true' : 'false');
@@ -239,24 +240,30 @@
         au = new Audio(sw.dataset.src); au.loop = true; au.volume = .5; au.preload = 'auto';
         au.addEventListener('loadedmetadata', function () { if (saved.t) au.currentTime = saved.t; }, { once: true });
         au.addEventListener('play', function () { ui(true); save(true); });
-        au.addEventListener('pause', function () { ui(false); save(false); });
+        au.addEventListener('pause', function () { ui(false); });
       }
       return au;
     }
-    var waiting = false, GESTURES = ['pointerdown', 'keydown', 'touchend'];
-    function unwait() { waiting = false; GESTURES.forEach(function (ev) { document.removeEventListener(ev, onGesture, true); }); }
+    var GESTURES = ['pointerdown', 'mousedown', 'touchend', 'click', 'keydown'];
+    function unwait() { GESTURES.forEach(function (ev) { document.removeEventListener(ev, onGesture, true); }); }
     function onGesture(e) {
-      unwait();
       // Si el gesto es sobre el propio botón, ya lo gestiona toggle()
-      if (e.target.closest && (e.target.closest('.song-btn') || e.target.closest('[data-song-toggle]'))) return;
-      audio().play().catch(function () {});
+      if (e.target.closest && (e.target.closest('.song-btn') || e.target.closest('[data-song-toggle]'))) { unwait(); return; }
+      var a = audio();
+      if (!a.paused) { unwait(); return; }
+      // Solo dejamos de escuchar cuando de verdad ha empezado a sonar
+      a.play().then(unwait).catch(function () {});
     }
-    function toggle() { unwait(); var a = audio(); if (a.paused) a.play().catch(function () {}); else a.pause(); }
+    function toggle() {
+      unwait(); var a = audio();
+      if (a.paused) { stopped = false; a.play().catch(function () {}); }
+      else { stopped = true; a.pause(); save(false); }
+    }
     sb.addEventListener('click', toggle);
     toggles.forEach(function (b) { b.addEventListener('click', toggle); });
-    if (!saved.stopped) {
+    if (!stopped) {
       audio().play().catch(function () {
-        sw.classList.add('resume'); waiting = true;
+        sw.classList.add('resume');
         GESTURES.forEach(function (ev) { document.addEventListener(ev, onGesture, true); });
       });
     }
