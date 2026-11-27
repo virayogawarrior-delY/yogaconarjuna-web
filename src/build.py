@@ -33,7 +33,7 @@ NAV_PARENT = {'/mi-libro/': '/sobre-mi-creador-de-virayoga/', '/viajes-india/': 
 SONG = dict(src='/audio/jai-ganesha.mp3', title='Jai Ganesha', artist='Arjuna')
 # Enlaces de la música de Arjuna (pendiente de que los envíe: dejar '' hasta tenerlos)
 SPOTIFY = ''
-YT_MUSIC = ''
+YT_MUSIC = 'https://www.youtube.com/channel/UC9uWznLGx7_VeVcMQdMZblA'   # canal de YouTube de Bhakti
 
 def _ver(rel):
     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', rel), 'rb') as f:
@@ -311,7 +311,7 @@ def song_block():
     if SPOTIFY:
         links += f'<a class="btn ghost" href="{SPOTIFY}" target="_blank" rel="noopener">Escúchame en Spotify</a> '
     if YT_MUSIC:
-        links += f'<a class="btn ghost" href="{YT_MUSIC}" target="_blank" rel="noopener">Escúchame en YouTube</a>'
+        links += f'<a class="btn ghost" href="{YT_MUSIC}" target="_blank" rel="noopener">Canal de Bhakti en YouTube</a>'
     return f'''
   <div class="song-card reveal">
     <button class="song-big" type="button" data-song-toggle aria-label="Escuchar «{SONG['title']}»">{ICON['music']}</button>
