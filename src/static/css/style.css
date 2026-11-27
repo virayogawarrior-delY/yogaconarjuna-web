@@ -451,3 +451,13 @@ a.post{color:inherit;text-decoration:none}
   .song-card{flex-direction:column;text-align:center}
 }
 @media print{.song{display:none}}
+
+/* Testimonios de YouTube (vídeos verticales) */
+.testimonials .t.yt-t{flex:0 0 230px;margin:0}
+.testimonials .video.short{max-width:none;box-shadow:0 12px 30px rgba(0,0,0,.18);background-size:auto 133%;background-position:center}
+.testimonials .video.short button{width:60px;height:60px}
+.testimonials figcaption{padding:12px 2px 0;font-size:.95rem;line-height:1.5}
+.testimonials figcaption strong{display:block;color:var(--ink)}
+.testimonials figcaption span{color:var(--muted)}
+@media(min-width:1025px){.testimonials:not(:has(.yt-t:nth-child(5))){justify-content:center}}
+@media(max-width:760px){.testimonials .t.yt-t{flex:0 0 200px}}

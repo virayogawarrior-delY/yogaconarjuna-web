@@ -62,7 +62,26 @@ SOCIAL = [('https://www.facebook.com/arjunayogastudio', 'Facebook', 'fb'),
           ('https://www.tiktok.com/@yogaconarjuna', 'TikTok', 'tt'),
           ('https://www.youtube.com/@yogaconarjuna', 'YouTube', 'yt')]
 
-TESTIMONIALS = ['DXdwQoNDMti', 'Dc8JLtGR493', 'DX8rQTyMKCm', 'DX6EL_mMEZm', 'DXwejItMblf']
+# Testimonios en vídeo: lista de YouTube «Testimonios Virayoga» (vídeos cortos verticales).
+# (id de YouTube, nombre, tipo, frase corta). Tipos: 'formacion' (profes formadas), 'vida' (lo que les ha cambiado),
+# 'taller' (talleres, clases y eventos). Para añadir uno nuevo, sube el vídeo a la lista y añade aquí una línea.
+TESTIMONIOS = [
+    ('vCTJyjKA4UU', 'Montse', 'formacion', 'Profesora de Virayoga, súper feliz de haberse formado.'),
+    ('4wH96GqEznA', 'Elena', 'formacion', '«La recomiendo un montón, tanto si es tu primera formación como si ya has hecho otras.»'),
+    ('2z3X9ca_QSw', 'Caterine', 'formacion', '«Me ha aportado algo diferente: seguridad en mí misma.»'),
+    ('4icnmu1MR-o', 'Gema', 'formacion', '«Virayoga me ha enfocado a despertar mi poder interior, mi seguridad, mi confianza.»'),
+    ('-UmMe4KWMbc', 'Astrid', 'vida', 'Llegó hundida y hoy enseña Virayoga: su historia.'),
+    ('TX3XsXXL66I', 'Alumna de Virayoga', 'vida', '«Me ha dado herramientas para ser más fuerte y afrontar la vida.»'),
+    ('x0fsqrGqNis', 'Profesora de yoga', 'vida', '«Después de la quimioterapia, me ha ayudado a sentirme más fuerte.»'),
+    ('FZ3Z8ljJ4Yw', 'Laya', 'vida', 'Todo lo que le aporta Virayoga.'),
+    ('ykG72D7uJRA', 'Alumna de taller', 'taller', '«Ha sido todo un regalo. Superrecomendable.»'),
+    ('DKPZAiohsL8', 'Alumna del taller «Libérate»', 'taller', '«Me ha sorprendido ese trasfondo tan profundo de crecimiento personal.»'),
+    ('TRIcS73HJA8', 'Alumno de taller', 'taller', '«Mi primer contacto con el yoga: he conectado conmigo mismo.»'),
+    ('2ZPxGgELdgU', 'Alumno de taller', 'taller', '«Me voy muy contento y lleno de este taller.»'),
+    ('SBTLdEzidsc', 'Alumna de taller', 'taller', '«Vine con miedos… y no solo pude, me ha llegado al alma.»'),
+    ('QAmn2FAw9Jc', 'Alumna de las clases', 'taller', '«Una práctica que me da energía, muy dinámica y divertida.»'),
+]
+TESTIMONIOS_LIST = 'https://www.youtube.com/playlist?list=PLKHs8bw52nGk'
 
 def social_html():
     return '<div class="social">' + ''.join(
@@ -84,25 +103,27 @@ def newsletter(form_name='newsletter'):
   </div>
 </section>'''
 
-def testimonials_html(title='Lo que dicen de Virayoga', soft=True):
-    items = ''
-    for n, c in enumerate(TESTIMONIALS, 1):
-        # Si existe src/video/<codigo>.mp4 se usa el vídeo propio (mejor); si no, el reproductor de Instagram dentro de la web
-        if os.path.exists(os.path.join(HERE, 'video', c + '.mp4')):
-            items += f'''
-      <div class="t"><video controls playsinline preload="none" poster="/video/{c}.jpg" src="/video/{c}.mp4" title="Testimonio {n}"></video></div>'''
-        else:
-            items += f'''
-      <div class="t"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/{c}/" data-instgrm-version="14"><div class="t-placeholder"><a href="https://www.instagram.com/reel/{c}/" target="_blank" rel="noopener">Ver testimonio</a></div></blockquote></div>'''
+def testimonials_html(title='Lo que dicen de Virayoga', kinds=('vida', 'formacion', 'taller'), ids=None, soft=True,
+                      lead='Experiencias reales de personas que practican Virayoga.'):
+    if ids:
+        items = [t for i in ids for t in TESTIMONIOS if t[0] == i]
+    else:
+        items = [t for k in kinds for t in TESTIMONIOS if t[2] == k]
+    cards = ''.join(f'''
+      <figure class="t yt-t reveal">
+        <div class="video short" data-yt="{vid}" data-title="Testimonio de {html.escape(name)}" style="background-image:url(https://i.ytimg.com/vi/{vid}/hqdefault.jpg)"><button aria-label="Ver el testimonio de {html.escape(name)}">{ICON['play']}</button></div>
+        <figcaption><strong>{html.escape(name)}</strong><span>{html.escape(q)}</span></figcaption>
+      </figure>''' for vid, name, _, q in items)
     return f'''
 <section class="section{' soft' if soft else ''}" id="testimonios">
   <div class="wrap">
     <div class="center reveal">
       <h2 class="section-title">{title}</h2>
-      <p class="lead">Experiencias reales de personas que practican Virayoga.</p>
+      <p class="lead">{lead}</p>
     </div>
-    <div class="testimonials" data-instagram>{items}
+    <div class="testimonials">{cards}
     </div>
+    <p class="center" style="margin-top:12px"><a class="btn ghost" href="{TESTIMONIOS_LIST}" target="_blank" rel="noopener">Ver todos en YouTube</a></p>
   </div>
 </section>'''
 
@@ -279,7 +300,7 @@ def home():
 
 {hire_html()}
 
-{testimonials_html()}
+{testimonials_html(ids=['TX3XsXXL66I', '2z3X9ca_QSw', 'ykG72D7uJRA', 'x0fsqrGqNis', '-UmMe4KWMbc', 'SBTLdEzidsc'])}
 
 <section class="section soft">
   <div class="wrap split r">
@@ -365,7 +386,7 @@ def sobre():
   </ul>
   <p style="margin-top:2em"><a class="btn" href="/contacta/">Escríbeme</a></p>
 </article>
-{testimonials_html()}
+{testimonials_html('Lo que Virayoga les ha cambiado', kinds=('vida',), lead='Personas que encontraron en la práctica algo más que ejercicio.')}
 {newsletter()}'''
     page('/sobre-mi-creador-de-virayoga/', 'Sobre mí · Hola, soy Arjuna · Virayoga, viajes a India y Bhakti',
          'Soy Arjuna, el canalla del yoga: creador de Virayoga, viajero de India y músico de Bhakti. Te cuento quién soy y por qué hago lo que hago.',
@@ -453,7 +474,8 @@ def virayoga():
   </div>
   <h2 class="quote-title center">«Las asanas y el crecimiento personal encienden el fuego de la actitud Vira»<br><small style="font-size:.6em">Arjuna</small></h2>
 </article>
-{testimonials_html('Testimonios de Virayoga')}
+{testimonials_html('Testimonios de la formación', kinds=('formacion',), lead='Profesoras formadas en Virayoga cuentan qué les ha aportado.')}
+{testimonials_html('Y lo que dicen quienes practican', kinds=('vida',), soft=False, lead='Virayoga dentro y fuera de la esterilla.')}
 {hire_html()}
 {newsletter()}'''
     course = {"@context": "https://schema.org", "@type": "Course", "name": "Formación de Virayoga",
@@ -512,7 +534,8 @@ def actividades():
       <button class="btn" type="submit">Enviar</button>
     </form>
   </div>
-</div>'''
+</div>
+{testimonials_html('Ya han traído el Virayoga', ids=['x0fsqrGqNis', 'DKPZAiohsL8', 'ykG72D7uJRA', '2ZPxGgELdgU'], lead='Una profesora que contrató a Arjuna para su plataforma de clases y personas que vivieron sus talleres.')}'''
     svc = {"@context": "https://schema.org", "@type": "Service", "name": "Masterclasses, talleres y clases de Virayoga para escuelas, empresas, hoteles y eventos privados",
            "provider": {"@type": "Person", "name": "Alberto López «Arjuna»", "url": DOMAIN + "/"}, "areaServed": "Barcelona, España",
            "serviceType": "Yoga para eventos"}
@@ -601,6 +624,7 @@ def agenda():
     {card('studio-1.jpg', 'Clases regulares', '<p><strong>Virayoga los miércoles a las 19 h</strong> en Martorelles.</p><p>¿Quieres venir o prefieres una clase privada? Escríbeme y lo hablamos.</p><p><a class="btn" href="/contacta/?asunto=Clases">Contáctame</a></p>')}
   </div>
 </div>
+{testimonials_html('Así se viven los talleres y las clases', kinds=('taller',), lead='Lo que cuentan al terminar un taller, un evento o una clase de Virayoga.')}
 {hire_html()}
 {newsletter()}'''
     ev = {"@context": "https://schema.org", "@type": "Event", "name": "Street Virayoga en Plaça Reial",
@@ -699,7 +723,7 @@ def productos():
   </div>
   <p class="center" style="font-size:.85rem;color:#777;margin-top:18px">Al comprar aceptas las <a href="/condiciones-de-compra/">condiciones de compra</a> y la <a href="/politica-de-privacidad/">política de privacidad</a>.</p>
 </div>
-{testimonials_html()}
+{testimonials_html(kinds=('formacion', 'vida'))}
 {newsletter()}'''
     items = [{"@type": "ListItem", "position": i + 1, "url": f"{DOMAIN}/productos/#{p['id']}", "name": p['title']} for i, p in enumerate(PRODUCTS)]
     page('/productos/', 'Productos · Libro en PDF, formación de Virayoga y viaje a India · Yoga con Arjuna',
@@ -984,7 +1008,7 @@ def legales():
 <p>Esta web <strong>no utiliza cookies propias de análisis ni de publicidad</strong>. Solo pueden aparecer cookies de terceros en estos casos:</p>
 <ul>
 <li><strong>Vídeos de YouTube:</strong> se cargan en modo de privacidad mejorada (youtube-nocookie.com) y solo cuando haces clic en el vídeo.</li>
-<li><strong>Testimonios de Instagram:</strong> el servicio de inserción de Instagram (Meta) puede instalar sus propias cookies al cargar los vídeos.</li>
+<li><strong>Vídeos de YouTube:</strong> los vídeos (testimonios y prácticas) solo se cargan cuando pulsas «play», desde youtube-nocookie.com; a partir de ese momento YouTube (Google) puede instalar sus propias cookies.</li>
 <li><strong>Pago con Stripe:</strong> al pulsar «Comprar» pasas a la página segura de Stripe, que usa cookies técnicas necesarias para el pago y la prevención del fraude.</li>
 </ul>
 <h2>Cómo gestionarlas</h2>
