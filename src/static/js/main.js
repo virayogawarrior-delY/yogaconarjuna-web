@@ -219,15 +219,16 @@
     for (var k = 0; k < sel.options.length; k++) if (sel.options[k].text.indexOf(q) === 0) { sel.selectedIndex = k; break; }
   }
 
-  // Música de fondo («Jai Ganesha»). Nunca suena sola: empieza cuando la persona pulsa el botón.
-  // Si estaba sonando, intenta seguir en la página siguiente desde el mismo punto.
+  // Música de fondo («Jai Ganesha»). Intenta sonar sola al entrar; si el navegador no lo deja
+  // (casi siempre, hasta que la persona interactúa), arranca con el primer clic, toque o tecla.
+  // Si la persona la pausa, no vuelve a sonar sola durante la visita. Sigue entre páginas desde el mismo punto.
   var sw = document.querySelector('[data-song]');
   if (sw) {
     var sb = sw.querySelector('.song-btn'), au = null, KEY = 'yca-song';
     var toggles = document.querySelectorAll('[data-song-toggle]');
     var saved = {};
     try { saved = JSON.parse(sessionStorage.getItem(KEY)) || {}; } catch (e) {}
-    function save(p) { try { sessionStorage.setItem(KEY, JSON.stringify({ playing: p, t: au ? au.currentTime : 0 })); } catch (e) {} }
+    function save(p) { try { sessionStorage.setItem(KEY, JSON.stringify({ playing: p, t: au ? au.currentTime : (saved.t || 0), stopped: !p })); } catch (e) {} }
     function ui(p) {
       sw.classList.toggle('on', p); sw.classList.remove('resume');
       sb.setAttribute('aria-pressed', p ? 'true' : 'false');
@@ -235,19 +236,29 @@
     }
     function audio() {
       if (!au) {
-        au = new Audio(sw.dataset.src); au.loop = true; au.volume = .6;
+        au = new Audio(sw.dataset.src); au.loop = true; au.volume = .5; au.preload = 'auto';
+        au.addEventListener('loadedmetadata', function () { if (saved.t) au.currentTime = saved.t; }, { once: true });
         au.addEventListener('play', function () { ui(true); save(true); });
         au.addEventListener('pause', function () { ui(false); save(false); });
       }
       return au;
     }
-    function toggle() { var a = audio(); if (a.paused) a.play().catch(function () {}); else a.pause(); }
+    var waiting = false, GESTURES = ['pointerdown', 'keydown', 'touchend'];
+    function unwait() { waiting = false; GESTURES.forEach(function (ev) { document.removeEventListener(ev, onGesture, true); }); }
+    function onGesture(e) {
+      unwait();
+      // Si el gesto es sobre el propio botón, ya lo gestiona toggle()
+      if (e.target.closest && (e.target.closest('.song-btn') || e.target.closest('[data-song-toggle]'))) return;
+      audio().play().catch(function () {});
+    }
+    function toggle() { unwait(); var a = audio(); if (a.paused) a.play().catch(function () {}); else a.pause(); }
     sb.addEventListener('click', toggle);
     toggles.forEach(function (b) { b.addEventListener('click', toggle); });
-    if (saved.playing) {
-      var a = audio();
-      a.addEventListener('loadedmetadata', function () { if (saved.t) a.currentTime = saved.t; }, { once: true });
-      a.play().catch(function () { sw.classList.add('resume'); try { sessionStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {} });
+    if (!saved.stopped) {
+      audio().play().catch(function () {
+        sw.classList.add('resume'); waiting = true;
+        GESTURES.forEach(function (ev) { document.addEventListener(ev, onGesture, true); });
+      });
     }
     window.addEventListener('pagehide', function () { if (au) save(!au.paused); });
   }
