@@ -212,4 +212,43 @@
 
   // Año del footer
   var y = document.querySelector('[data-year]'); if (y) y.textContent = new Date().getFullYear();
+
+  // Formulario de contacto: «/contacta/?asunto=Viaje a India» deja elegido el asunto
+  var sel = document.querySelector('#c-asunto'), q = new URLSearchParams(location.search).get('asunto');
+  if (sel && q) {
+    for (var k = 0; k < sel.options.length; k++) if (sel.options[k].text.indexOf(q) === 0) { sel.selectedIndex = k; break; }
+  }
+
+  // Música de fondo («Jai Ganesha»). Nunca suena sola: empieza cuando la persona pulsa el botón.
+  // Si estaba sonando, intenta seguir en la página siguiente desde el mismo punto.
+  var sw = document.querySelector('[data-song]');
+  if (sw) {
+    var sb = sw.querySelector('.song-btn'), au = null, KEY = 'yca-song';
+    var toggles = document.querySelectorAll('[data-song-toggle]');
+    var saved = {};
+    try { saved = JSON.parse(sessionStorage.getItem(KEY)) || {}; } catch (e) {}
+    function save(p) { try { sessionStorage.setItem(KEY, JSON.stringify({ playing: p, t: au ? au.currentTime : 0 })); } catch (e) {} }
+    function ui(p) {
+      sw.classList.toggle('on', p); sw.classList.remove('resume');
+      sb.setAttribute('aria-pressed', p ? 'true' : 'false');
+      toggles.forEach(function (b) { b.classList.toggle('on', p); b.setAttribute('aria-pressed', p ? 'true' : 'false'); });
+    }
+    function audio() {
+      if (!au) {
+        au = new Audio(sw.dataset.src); au.loop = true; au.volume = .6;
+        au.addEventListener('play', function () { ui(true); save(true); });
+        au.addEventListener('pause', function () { ui(false); save(false); });
+      }
+      return au;
+    }
+    function toggle() { var a = audio(); if (a.paused) a.play().catch(function () {}); else a.pause(); }
+    sb.addEventListener('click', toggle);
+    toggles.forEach(function (b) { b.addEventListener('click', toggle); });
+    if (saved.playing) {
+      var a = audio();
+      a.addEventListener('loadedmetadata', function () { if (saved.t) a.currentTime = saved.t; }, { once: true });
+      a.play().catch(function () { sw.classList.add('resume'); try { sessionStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {} });
+    }
+    window.addEventListener('pagehide', function () { if (au) save(!au.paused); });
+  }
 })();

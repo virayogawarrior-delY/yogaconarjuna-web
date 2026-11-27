@@ -13,18 +13,27 @@ WHATSAPP = '34619945481'
 # Hoja de Google «Agenda web Yoga con Arjuna», publicada como CSV. La página de Agenda la lee al abrirse.
 AGENDA_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRJKZHLZOl0yl4BaAz60Z0iUoo-PVH51euGlek8JwOeIxybudLqLMJQXEU8hMu9oIWf-VeLFlbEOc-s/pub?gid=984860236&single=true&output=csv'
 
+# Menú acordado en la reunión del 21/11/2026: Home, Sobre mí (con las 3 ramas), Formación Virayoga,
+# Agenda y actividades (juntas), Biblioteca (antes «Blog»), Prensa, Productos y Contacta.
+# «Mi libro» y «Viajes a India» siguen existiendo como páginas y se enlazan desde Sobre mí y la Home.
 NAV = [
     ('Home', '/'),
     ('Sobre mí', '/sobre-mi-creador-de-virayoga/'),
-    ('Mi libro', '/mi-libro/'),
     ('Formación Virayoga', '/virayoga/'),
-    ('Actividades', '/servicios-de-virayoga/'),
-    ('Agenda', '/agenda/'),
+    ('Agenda y actividades', '/agenda/'),
+    ('Biblioteca', '/blog/'),
     ('Prensa', '/prensa/'),
-    ('Blog', '/blog/'),
     ('Productos', '/productos/'),
     ('Contacta', '/contacta/'),
 ]
+# Páginas que no están en el menú pero se marcan como parte de una sección
+NAV_PARENT = {'/mi-libro/': '/sobre-mi-creador-de-virayoga/', '/viajes-india/': '/agenda/', '/servicios-de-virayoga/': '/agenda/'}
+
+# Canción de fondo (Bhakti). El reproductor nunca arranca solo: la persona pulsa «play».
+SONG = dict(src='/audio/jai-ganesha.mp3', title='Jai Ganesha', artist='Arjuna')
+# Enlaces de la música de Arjuna (pendiente de que los envíe: dejar '' hasta tenerlos)
+SPOTIFY = ''
+YT_MUSIC = ''
 
 def _ver(rel):
     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', rel), 'rb') as f:
@@ -34,7 +43,10 @@ CSS_V, JS_V = _ver('css/style.css'), _ver('js/main.js')
 ICON = {
  'fb': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21h3.1z"/></svg>',
  'ig': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7.3A4.7 4.7 0 1 0 12 16.7 4.7 4.7 0 0 0 12 7.3zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm6-7.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0zM21.9 8.2c-.1-1.5-.4-2.8-1.5-3.9S18 2.9 16.5 2.8C15 2.7 9 2.7 7.5 2.8 6 2.9 4.7 3.2 3.6 4.3S2.2 6.7 2.1 8.2C2 9.7 2 14.3 2.1 15.8c.1 1.5.4 2.8 1.5 3.9s2.4 1.4 3.9 1.5c1.5.1 7.5.1 9 0 1.5-.1 2.8-.4 3.9-1.5s1.4-2.4 1.5-3.9c.1-1.5.1-6.1 0-7.6zM19.9 17.6a3 3 0 0 1-1.7 1.7c-1.2.5-4 .4-5.2.4s-4.1.1-5.2-.4a3 3 0 0 1-1.7-1.7c-.5-1.2-.4-4-.4-5.3s-.1-4.1.4-5.3a3 3 0 0 1 1.7-1.7c1.2-.5 4-.4 5.2-.4s4.1-.1 5.2.4a3 3 0 0 1 1.7 1.7c.5 1.2.4 4 .4 5.3s.1 4.1-.4 5.3z"/></svg>',
- 'x': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8L17.8 3zm-1.1 16.2h1.7L7.4 4.7H5.6l11.1 14.5z"/></svg>',
+ 'tt': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 2h-3.3v13.2a2.9 2.9 0 1 1-2.9-2.9c.3 0 .6 0 .9.1V9a6.3 6.3 0 1 0 5.3 6.2V8.6a8 8 0 0 0 4.7 1.5V6.8a4.7 4.7 0 0 1-4.7-4.8z"/></svg>',
+ 'music': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v10.6A4 4 0 1 0 14 17V7h4V3h-6z"/></svg>',
+ 'pause': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>',
+ 'spotify': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.6 14.4a.6.6 0 0 1-.9.2c-2.4-1.5-5.4-1.8-8.9-1a.6.6 0 1 1-.3-1.2c3.9-.9 7.2-.5 9.9 1.1.3.2.4.6.2.9zm1.2-2.7a.8.8 0 0 1-1.1.3c-2.7-1.7-6.9-2.2-10.1-1.2a.8.8 0 1 1-.5-1.5c3.7-1.1 8.3-.6 11.4 1.3.4.2.5.7.3 1.1zm.1-2.8C14.7 9 9.4 8.8 6.3 9.7a1 1 0 1 1-.6-1.8c3.5-1.1 9.4-.9 13.1 1.3a1 1 0 0 1-.9 1.7z"/></svg>',
  'yt': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1c.4-1.6.5-4.8.5-4.8s0-3.2-.5-4.8zM9.7 15V9l5.8 3-5.8 3z"/></svg>',
  'play': '<svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path fill="#fff" d="M8 5v14l11-7z"/></svg>',
  'mail': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>',
@@ -47,7 +59,8 @@ ICON = {
 
 SOCIAL = [('https://www.facebook.com/arjunayogastudio', 'Facebook', 'fb'),
           ('https://www.instagram.com/yogaconarjuna/', 'Instagram', 'ig'),
-          ('https://twitter.com/yogaconarjuna', 'X (Twitter)', 'x')]
+          ('https://www.tiktok.com/@yogaconarjuna', 'TikTok', 'tt'),
+          ('https://www.youtube.com/@yogaconarjuna', 'YouTube', 'yt')]
 
 TESTIMONIALS = ['DXdwQoNDMti', 'Dc8JLtGR493', 'DX8rQTyMKCm', 'DX6EL_mMEZm', 'DXwejItMblf']
 
@@ -71,7 +84,7 @@ def newsletter(form_name='newsletter'):
   </div>
 </section>'''
 
-def testimonials_html(title='Lo que dicen mis alumnos', soft=True):
+def testimonials_html(title='Lo que dicen de Virayoga', soft=True):
     items = ''
     for n, c in enumerate(TESTIMONIALS, 1):
         # Si existe src/video/<codigo>.mp4 se usa el vídeo propio (mejor); si no, el reproductor de Instagram dentro de la web
@@ -96,7 +109,7 @@ def testimonials_html(title='Lo que dicen mis alumnos', soft=True):
 def page(path, title, desc, body, hero=None, hero_title=None, crumb=None, image=None, schema=None):
     canonical = DOMAIN + path
     nav = ''.join(
-        f'<li><a href="{h}"{" aria-current=\"page\"" if h == path else ""}{" class=\"nav-shop\"" if h == "/productos/" else ""}>{n}</a></li>'
+        f'<li><a href="{h}"{" aria-current=\"page\"" if h == path or NAV_PARENT.get(path) == h else ""}{" class=\"nav-shop\"" if h == "/productos/" else ""}>{n}</a></li>'
         for n, h in NAV)
     hero_html = ''
     if hero:
@@ -147,6 +160,11 @@ def page(path, title, desc, body, hero=None, hero_title=None, crumb=None, image=
 <footer class="site-footer">
   © <span data-year>2026</span> · Yoga con Arjuna<span class="sep">·</span><a href="/aviso-legal/">Aviso legal</a><span class="sep">·</span><a href="/politica-de-privacidad/">Privacidad</a><span class="sep">·</span><a href="/politica-de-cookies/">Cookies</a><span class="sep">·</span><a href="/condiciones-de-compra/">Condiciones de compra</a><span class="sep">·</span><a href="/contacta/">Contacta</a>
 </footer>
+<div class="song" data-song data-src="{SONG['src']}" data-title="{SONG['title']}">
+  <button class="song-btn" type="button" aria-pressed="false" aria-label="Escuchar «{SONG['title']}», de {SONG['artist']}" title="Música: «{SONG['title']}», de {SONG['artist']}">
+    <span class="i-play">{ICON['music']}</span><span class="i-pause">{ICON['pause']}</span><span class="txt">Escucha «{SONG['title']}»</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>
+  </button>
+</div>
 <a class="wa-float" href="https://wa.me/{WHATSAPP}?text=Hola%20Arjuna%2C%20quiero%20m%C3%A1s%20informaci%C3%B3n" target="_blank" rel="noopener" aria-label="Escríbeme por WhatsApp">{ICON['wa'].replace('<svg ', '<svg width="28" height="28" ', 1)}<span>¿Hablamos?</span></a>
 <button class="to-top" aria-label="Volver arriba"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M12 4l-8 8h5v8h6v-8h5z"/></svg></button>
 <script src="/js/main.js?v={JS_V}" defer></script>
@@ -164,6 +182,54 @@ PERSON = {"@context": "https://schema.org", "@type": "Person", "name": "Alberto 
           "sameAs": [u for u, _, _ in SOCIAL]}
 
 # ---------------------------------------------------------------- HOME
+def buy_button(pid, label='Comprar'):
+    """Botón de compra de un producto de PRODUCTS (Stripe). Si aún no hay enlace, sale desactivado."""
+    p = next(x for x in PRODUCTS if x['id'] == pid)
+    if p['stripe']:
+        return f'<a class="btn" href="{p["stripe"]}" target="_blank" rel="noopener">{label}</a>'
+    return f'<a class="btn" href="/productos/#{pid}">{label}</a>'
+
+# Las tres ramas de Arjuna (acordado en la reunión: sustituyen a «formador adaptable»)
+PILLARS = [
+    ('virayoga', 'vira-salto.jpg', 'Virayoga', 'El método',
+     'Yoga, artes marciales y psicología en un mismo sistema. Te mueves en los 360º de la esterilla y despiertas tu actitud Vira. Y si quieres enseñarlo, te formo.',
+     '/virayoga/', 'Conoce la formación'),
+    ('viajes', 'india-jaipur.jpg', 'Viajes a India', 'El origen',
+     'Una vez al año me llevo a un grupo a la India de verdad: la que no sale en las postales. No es un retiro, es un viaje que te remueve por dentro.',
+     '/viajes-india/', 'Quiero viajar'),
+    ('bhakti', 'arjuna-templo.jpg', 'Bhakti', 'Música medicina',
+     'Mantras, guitarra y voz. El Bhakti es el yoga de la devoción, y para mí es la forma más directa de soltar la cabeza y abrir el corazón.',
+     '/sobre-mi-creador-de-virayoga/#bhakti', 'Escúchame'),
+]
+
+def pillars_html(title='Mis tres caminos', lead='Todo lo que hago sale de aquí.'):
+    cards = ''.join(f'''
+      <a class="pillar reveal" href="{href}" id="rama-{k}">
+        <div class="img" style="background-image:url(/img/{img})" role="img" aria-label="{html.escape(t)}"></div>
+        <div class="body"><span class="kicker">{kick}</span><h3>{t}</h3><p>{d}</p><span class="more">{cta} →</span></div>
+      </a>''' for k, img, t, kick, d, href, cta in PILLARS)
+    return f'''
+<section class="section">
+  <div class="wrap">
+    <div class="center reveal"><h2 class="section-title">{title}</h2><p class="lead">{lead}</p></div>
+    <div class="pillars">{cards}
+    </div>
+  </div>
+</section>'''
+
+def hire_html():
+    return '''
+<section class="hire">
+  <div class="wrap reveal">
+    <div>
+      <span class="kicker">Escuelas · empresas · hoteles · eventos privados</span>
+      <h2>¿Quieres Virayoga en tu escuela o en tu evento? Contrátame.</h2>
+      <p>Masterclasses y talleres de Virayoga para escuelas de yoga, sesiones para equipos de empresa, workshops en hoteles y celebraciones privadas, como despedidas de soltera. Tú pones el sitio y las ganas; yo, el resto.</p>
+    </div>
+    <a class="btn light" href="/servicios-de-virayoga/">Contrátame</a>
+  </div>
+</section>'''
+
 def home():
     slides = ''.join(f'<div class="slide{" on" if i == 1 else ""}" style="background-image:url(/img/hero-{i}.jpg)"></div>' for i in (1, 5, 2, 6, 3, 4))
     body = f'''
@@ -171,44 +237,33 @@ def home():
   {slides}
   <div class="inner">
     <h1>Arjuna, el canalla del yoga</h1>
-    <p>Despierta tu poder interno con el Virayoga: yoga, artes marciales y crecimiento personal.</p>
-    <div><a class="btn" href="/agenda/">¡Quiero practicar!</a></div>
+    <p>Yoga, artes marciales y psicología para despertar tu fuerza interior. Sin postureo y con los pies en la tierra.</p>
+    <div class="hero-btns"><a class="btn" href="/virayoga/">Descubre la formación</a> <a class="btn light" href="/servicios-de-virayoga/">Contrátame</a></div>
   </div>
   <div class="dots"></div>
 </section>
 
 <section class="section">
   <div class="wrap split">
-    <div class="media reveal"><img src="/img/arjuna-estudio.jpg" alt="Alberto López, Arjuna, profesor de Virayoga" width="801" height="1200" loading="lazy" style="max-width:440px;margin:0 auto"></div>
+    <div class="media reveal"><img src="/img/arjuna-estudio.jpg" alt="Alberto López, Arjuna, creador de Virayoga" width="801" height="1200" loading="lazy" style="max-width:440px;margin:0 auto"></div>
     <div class="reveal">
       <h2 class="section-title"><a href="/sobre-mi-creador-de-virayoga/" style="color:inherit">Hola, soy Arjuna</a></h2>
-      <p>También conocido como «El canalla del yoga». Soy profesor desde hace muchos años pero no soy el «típico yogui». Dicen que soy canalla por mi forma de ser, pero para entenderlo tendrás que conocerme.</p>
-      <p>Hubo un momento en mi vida en que el yoga y las artes marciales lo cambiaron todo. Es por eso que decidí compartir mi experiencia y crear el <strong>Virayoga</strong>, historia y método que te cuento en mi libro.</p>
+      <p>Me llaman «el canalla del yoga». Llevo muchos años enseñando, pero no soy el típico yogui: no te voy a hablar de luz cósmica ni a vender milagros.</p>
+      <p>El yoga y las artes marciales me cambiaron la vida. De esa mezcla, y de lo que me ha tocado vivir, nació el <strong>Virayoga</strong>. Hoy mi vida gira alrededor de tres cosas: el Virayoga, los viajes a India y la música Bhakti.</p>
       <a class="btn ghost" href="/sobre-mi-creador-de-virayoga/">Conóceme</a>
     </div>
   </div>
 </section>
 
-<section class="section soft">
-  <div class="wrap split r">
-    <div class="media book reveal"><a href="/mi-libro/"><img src="/img/libro-portada.jpg" alt="Portada del libro Conoce el Virayoga por Arjuna, el canalla del yoga" width="645" height="972" loading="lazy"></a></div>
-    <div class="reveal">
-      <h2 class="section-title"><a href="/mi-libro/" style="color:inherit">Un libro de superación</a></h2>
-      <p><em>Conoce el Virayoga por Arjuna, el canalla del yoga</em> es un libro de vivencias que cuenta la historia de cómo un niño de la calle se supera a sí mismo y consigue tener éxito en la vida.</p>
-      <p>Es una historia real que explica cómo puedes integrar la actitud Vira en tu vida. Una actitud de superación que me ha llevado a desarrollar el Virayoga, un sistema de yoga diferente.</p>
-      <a class="btn" href="/mi-libro/">Comprar libro</a>
-    </div>
-  </div>
-</section>
+{pillars_html()}
 
 <section class="parallax" style="background-image:url(/img/virayoga-fondo.jpg)">
   <div class="wrap cols">
     <div class="reveal">
-      <h2 class="section-title" style="color:#fff">Y ¿qué es el Virayoga?</h2>
-      <p>Virayoga es un sistema holístico que nace de la unión del yoga y las artes marciales. Tiene como objetivo principal potenciar la inteligencia corporal y la fortaleza mental a través de los beneficios de sus disciplinas.</p>
-      <p>Autoconfianza, seguridad, psicomotricidad y coordinación son algunas de las habilidades que se ven potenciadas gracias a la práctica de movimientos de artes marciales, mientras que la flexibilidad, el equilibrio y la presencia se ven aún más potenciadas por esta práctica.</p>
-      <p>La principal diferencia con otros estilos de yoga son los movimientos marciales que, unidos a las asanas, generan una energía diferente. Esto lo convierte en una práctica dinámica que nos ayuda a potenciar los beneficios de cada asana.</p>
-      <p>El objetivo final es despertar la <strong>actitud Vira</strong>, una actitud de guerrero. <em>Vira</em> en sánscrito significa «guerrero» y <em>yoga</em> «unión»: el Virayoga es «el yoga del guerrero». Despertando así nuestro guerrero interior.</p>
+      <h2 class="section-title" style="color:#fff">¿Y qué es el Virayoga?</h2>
+      <p><strong>Yoga + artes marciales + psicología = Virayoga.</strong> Un sistema de yoga dinámico que une el Hatha Yoga tradicional con movimientos de artes marciales y te hace trabajar todo el cuerpo usando los 360º de la esterilla.</p>
+      <p>Ganas fuerza, coordinación y presencia. Y, de paso, algo que no sale en ninguna foto: seguridad en ti. Porque cada sesión parte de una intención clara que te lleva hacia tu <strong>actitud Vira</strong>.</p>
+      <p><em>Vira</em> significa «guerrero» en sánscrito y <em>yoga</em>, «unión». No hace falta ser flexible ni venir de las artes marciales: hace falta querer trabajarte.</p>
       <a class="btn light" href="/virayoga/">Descubre el Virayoga</a>
     </div>
     <div class="reveal">
@@ -222,28 +277,19 @@ def home():
 
 <section class="section soft"><div class="wrap">{camino_html()}</div></section>
 
-<section class="section">
-  <div class="wrap">
-    <div class="center reveal">
-      <h2 class="section-title"><a href="/servicios-de-virayoga/" style="color:inherit">Servicios de Virayoga</a></h2>
-      <p class="lead">Encuentra la mejor forma de practicar.</p>
-    </div>
-    <div class="services">
-      <div class="service reveal"><img src="/img/ico-clases.jpg" alt="" width="70" height="70"><h3>Clases</h3><p>¿Quieres practicar un sistema de yoga que te aporte el equilibrio y la fuerza que necesitas?</p><a class="btn" href="/agenda/">¡Quiero practicar!</a></div>
-      <div class="service reveal"><img src="/img/ico-retiros.jpg" alt="" width="70" height="70"><h3>Retiros</h3><p>¿Necesitas un respiro? ¿Estás cansado/a del día a día y no tienes un solo momento para cuidar de ti?</p><a class="btn" href="/agenda/">¡Quiero un retiro!</a></div>
-      <div class="service reveal"><img src="/img/ico-india.jpg" alt="" width="70" height="70"><h3>Viaje a India</h3><p>¿Quieres tener una experiencia inolvidable que te cambie la percepción de tu vida?</p><a class="btn" href="/contacta/">¡Quiero viajar!</a></div>
-      <div class="service reveal"><img src="/img/ico-formacion.png" alt="" width="70" height="70"><h3>Formación</h3><p>¿Buscas una formación profesional que te haga crecer personal y profesionalmente?</p><a class="btn" href="/virayoga/">¡Quiero formarme!</a></div>
-    </div>
-  </div>
-</section>
+{hire_html()}
 
 {testimonials_html()}
 
-<section class="section">
-  <div class="wrap center reveal">
-    <h2 class="section-title">Productos y recursos</h2>
-    <p class="lead">Llévate el Virayoga a casa: el libro, cursos online y material de formación.</p>
-    <a class="btn" href="/productos/">Ver productos</a>
+<section class="section soft">
+  <div class="wrap split r">
+    <div class="media book reveal"><a href="/mi-libro/"><img src="/img/libro-portada.jpg" alt="Portada del libro Conoce el Virayoga con Arjuna, el canalla del yoga" width="645" height="972" loading="lazy"></a></div>
+    <div class="reveal">
+      <h2 class="section-title"><a href="/mi-libro/" style="color:inherit">Mi libro, en PDF</a></h2>
+      <p><em>Conoce el Virayoga con Arjuna, el canalla del yoga</em> es mi historia: cómo un chaval de la calle encontró en el yoga y las artes marciales su forma de salir adelante, y cómo de ahí nació el Virayoga.</p>
+      <p>Descárgalo en PDF y empieza a leerlo hoy.</p>
+      {buy_button('libro-pdf', 'Comprar el PDF · 9,95 €')} <a class="btn ghost" href="/mi-libro/">Saber más</a>
+    </div>
   </div>
 </section>
 
@@ -255,24 +301,54 @@ def home():
 </section>
 {newsletter()}'''
     site = {"@context": "https://schema.org", "@type": "WebSite", "name": "Yoga con Arjuna", "url": DOMAIN + "/"}
-    page('/', 'Yoga con Arjuna · Despierta tu poder interno con el Virayoga',
-         'El Virayoga es un sistema de yoga holístico que fusiona las artes marciales, el yoga y el crecimiento personal. Conoce el Virayoga con Arjuna.',
+    page('/', 'Yoga con Arjuna · Virayoga, viajes a India y Bhakti con el canalla del yoga',
+         'Arjuna, el canalla del yoga: creador del Virayoga (yoga, artes marciales y psicología), viajes a India y música Bhakti. Formación, masterclasses y eventos.',
          body, image='hero-1.jpg', schema=[site, PERSON])
 
 # ---------------------------------------------------------------- SOBRE MÍ
+def song_block():
+    links = ''
+    if SPOTIFY:
+        links += f'<a class="btn ghost" href="{SPOTIFY}" target="_blank" rel="noopener">Escúchame en Spotify</a> '
+    if YT_MUSIC:
+        links += f'<a class="btn ghost" href="{YT_MUSIC}" target="_blank" rel="noopener">Escúchame en YouTube</a>'
+    return f'''
+  <div class="song-card reveal">
+    <button class="song-big" type="button" data-song-toggle aria-label="Escuchar «{SONG['title']}»">{ICON['music']}</button>
+    <div><span class="kicker">Escucha</span><h3>«{SONG['title']}»</h3><p>Un canto a Ganesha, el que aparta los obstáculos del camino. Dale al play y sigue navegando: la música te acompaña.</p>{('<p>' + links + '</p>') if links else ''}</div>
+  </div>'''
+
 def sobre():
     body = f'''
 <article class="narrow content">
   <h2 class="quote-title">Hola, soy Arjuna,</h2>
-  <p><strong>Creador, formador y profesor de Virayoga.</strong></p>
-  <p>Después de una larga trayectoria como profesor de Hatha Yoga en la línea de Nil Hahoutoff y como instructor de defensa personal, fusioné mis dos pasiones en una única práctica, el Virayoga.</p>
-  <p>Pero esto ya te lo he explicado, así que mejor te cuento quién soy. Soy una persona sencilla, que busca la felicidad en las pequeñas cosas del día a día.</p>
-  <div class="gallery reveal"><img src="/img/arjuna-templo.jpg" alt="Arjuna meditando frente a un templo" loading="lazy"><img src="/img/india-jaipur.jpg" alt="Arjuna en Jaipur, India" loading="lazy"><img src="/img/arjuna-mar.jpg" alt="Arjuna meditando junto al mar" loading="lazy"></div>
-  <p>Durante mis viajes a India me quedé impresionado de la capacidad de servicio de su gente y me di cuenta de que en mi interior también tenía esa cualidad escondida. Así que cuando emprendí mi viaje espiritual empecé a hacer Karma Yoga, a ayudar a los demás de forma incondicional.</p>
-  <p>Sin duda, el Karma Yoga fue un punto de inflexión en mi vida.</p>
-  <p>Otro punto de inflexión en mi vida, y el que ha creado la persona que hoy soy, es el yoga y las artes marciales.</p>
-  <p>Gracias a esas dos disciplinas milenarias he construido una persona con conciencia, principios y feliz.</p>
-  <p>Por todo esto, decidí transmitir mis conocimientos a través del Virayoga, para que otras personas puedan encontrar su propio camino a la felicidad.</p>
+  <p><strong>Alberto López en el DNI. Creador de Virayoga, viajero de India y músico de Bhakti.</strong></p>
+  <p>Durante años caminé por dos caminos que parecían no tocarse: el Hatha Yoga, en la línea de Nil Hahoutoff, y las artes marciales. Hasta que un día, en un taxi, con una libreta y un bolígrafo, empecé a unirlos. Así nació el Virayoga, el 15 de noviembre de 2015.</p>
+  <p>Soy una persona sencilla. Me gusta la gente de verdad, el humor y las cosas pequeñas del día a día. Por eso no me vas a ver de gurú: lo que te enseño lo he vivido antes en mi propio cuerpo.</p>
+</article>
+
+{pillars_html('Mis tres caminos', 'Lo que soy cabe en tres palabras: Virayoga, India y Bhakti.')}
+
+<article class="narrow content">
+  <h2 id="virayoga">Virayoga</h2>
+  <p>Es mi método y mi forma de entender el yoga: Hatha Yoga, artes marciales y psicología aplicada en un mismo sistema de 9 sesiones. Ya hay 25 profesoras formadas y una comunidad que no para de crecer.</p>
+  <p><a class="btn" href="/virayoga/">Conoce la formación</a></p>
+
+  <h2 id="viajes">Viajes a India</h2>
+  <p>Llevo más de 15 años viajando con grupos a India. Allí me impresionó la capacidad de servicio de su gente y descubrí que yo también la llevaba dentro: así empecé con el Karma Yoga. Cada año vuelvo para enseñarte la India profunda, la del origen del yoga.</p>
+  <div class="gallery reveal"><img src="/img/india-jaipur.jpg" alt="Arjuna en Jaipur, India" loading="lazy"><img src="/img/india-arcos.jpg" alt="Postura de Virayoga en un palacio de India" loading="lazy"><img src="/img/arjuna-templo.jpg" alt="Arjuna meditando frente a un templo" loading="lazy"></div>
+  <p><a class="btn" href="/viajes-india/">Ver el viaje a India</a></p>
+
+  <h2 id="bhakti">Bhakti, música medicina</h2>
+  <p>El Bhakti es el yoga de la devoción: cantar mantras hasta que la cabeza se calla y el corazón toma el mando. Lo vivo con la guitarra y la voz, en conciertos, en clase y en cada viaje. Si te apetece tenerlo en tu evento, también puedes <a href="/servicios-de-virayoga/">contratarme</a>.</p>
+  {song_block()}
+
+  <h2 id="libro">Mi libro</h2>
+  <div class="mini-book reveal">
+    <a href="/mi-libro/"><img src="/img/libro-portada.jpg" alt="Portada del libro Conoce el Virayoga" width="160" loading="lazy"></a>
+    <div><p><em>Conoce el Virayoga con Arjuna, el canalla del yoga</em>: mi historia y la del método, contada sin filtros. Ahora en PDF.</p>{buy_button('libro-pdf', 'Comprar el PDF · 9,95 €')} <a class="btn ghost" href="/mi-libro/">Saber más</a></div>
+  </div>
+
   <h3>Currículum</h3>
   <ul>
     <li>Certificado oficial de profesionalidad como Instructor de yoga.</li>
@@ -284,47 +360,37 @@ def sobre():
     <li>Formación en Ayurveda.</li>
     <li>Formación en Tantra tradicional hinduista en la línea de Osho y Mantak Chia.</li>
     <li>Organizador del Barcelona Yoga Day.</li>
-    <li>Creador, formador y profesor de Virayoga.</li>
-    <li>Autor del libro «Conoce el Virayoga por Arjuna, el canalla del yoga».</li>
+    <li>Creador y formador de Virayoga.</li>
+    <li>Autor del libro «Conoce el Virayoga con Arjuna, el canalla del yoga».</li>
   </ul>
   <p style="margin-top:2em"><a class="btn" href="/contacta/">Escríbeme</a></p>
 </article>
 {testimonials_html()}
 {newsletter()}'''
-    page('/sobre-mi-creador-de-virayoga/', 'Sobre mí · Hola, soy Arjuna · Creador de Virayoga · Yoga con Arjuna',
-         'Creador, formador y profesor de Virayoga. Amante de la vida y los animales. Quiero difundir mi método para que tú también puedas despertar tu poder interno.',
+    page('/sobre-mi-creador-de-virayoga/', 'Sobre mí · Hola, soy Arjuna · Virayoga, viajes a India y Bhakti',
+         'Soy Arjuna, el canalla del yoga: creador de Virayoga, viajero de India y músico de Bhakti. Te cuento quién soy y por qué hago lo que hago.',
          body, hero='cab-sobre-mi.jpg', hero_title='Sobre mí', crumb='Sobre mí', image='arjuna-estudio.jpg', schema=PERSON)
 
 # ---------------------------------------------------------------- MI LIBRO
 def libro():
-    stores = [('https://www.casadellibro.com/busqueda-libros?busqueda=conoce+el+virayoga', 'Casa del Libro'),
-              ('https://www.fnac.es/SearchResult/ResultList.aspx?Search=conoce+el+virayoga', 'Fnac'),
-              ('https://www.amazon.es/CONOCE-VIRAYOGA-ARJUNA-CANALLA-YOGA/dp/847091443X', 'Amazon'),
-              ('https://www.alibri.es/', 'Alibri Llibreria')]
-    st = ''.join(f'<a class="store" href="{u}" target="_blank" rel="noopener">{n} ↗</a>' for u, n in stores)
     body = f'''
 <div class="wrap content">
   <div class="layout-sidebar">
     <article>
-      <h2 class="quote-title" style="margin-top:0">"Conoce el Virayoga por Arjuna,<br>el canalla del Yoga"</h2>
-      <p>Es un libro de superación, que explica cómo cambié mi vida gracias al yoga y las artes marciales. Y cómo todo lo aprendido me ha llevado a desarrollar el Virayoga, una herramienta para crecer como persona.</p>
-      <p>Es la historia de alguien normal y corriente que lucha por tener una vida mejor. El ejemplo de que cuando no te conformas con lo que tienes y persigues tu sueño, este se puede hacer realidad.</p>
-      <p>Un relato de anécdotas y vivencias que han marcado mi vida y me han llevado a tomar un rumbo muy diferente. Situaciones problemáticas que me han enseñado que vale la pena vivir el día a día con pasión y fuerza.</p>
-      <p>Con este libro, quiero compartir contigo mi experiencia pero también presentarte el Virayoga. El método que fusiona las artes marciales, el yoga y el crecimiento personal para ayudarte a afrontar la vida.</p>
-      <p>Una herramienta de autoconocimiento y fortaleza que saca lo mejor de ti, dejando ver todo tu potencial y despertando el guerrero interno que hay dentro de ti.</p>
-      <p>Es la historia de cómo cambié mi vida, pero sobre todo, de cómo el Virayoga puede cambiar la tuya.</p>
-      <p><strong>¡Cómpralo ya!</strong></p>
-      <div class="reveal" style="background:var(--soft);padding:32px;margin:32px 0;text-align:center">
-        <h3 style="margin-top:0">¿Lo quieres firmado y dedicado por Arjuna?</h3>
-        <p>Cómpralo directamente aquí y te lo enviamos a casa.</p>
-        <a class="btn" href="/productos/#libro-firmado">Comprar libro firmado</a>
+      <h2 class="quote-title" style="margin-top:0">«Conoce el Virayoga con Arjuna,<br>el canalla del yoga»</h2>
+      <p>Es un libro de superación. Te cuento cómo cambié mi vida gracias al yoga y las artes marciales, y cómo todo lo aprendido me llevó a crear el Virayoga.</p>
+      <p>Es la historia de alguien normal y corriente que lucha por tener una vida mejor. Anécdotas, tropiezos y situaciones complicadas que me enseñaron que vale la pena vivir el día a día con pasión y con fuerza.</p>
+      <p>Y es también tu puerta de entrada al Virayoga: el método que une yoga, artes marciales y psicología para que conectes con tu fuerza interior y la uses en tu vida, dentro y fuera de la esterilla.</p>
+      <p>Es la historia de cómo cambié mi vida. Lo que hagas tú con ella ya es cosa tuya.</p>
+      <div class="buy-box reveal">
+        <h3>Llévatelo en PDF</h3>
+        <p class="price-big">9,95 €</p>
+        <p>Pago seguro y descarga inmediata. Lo lees en el móvil, en la tablet o en el ordenador.</p>
+        {buy_button('libro-pdf', 'Comprar el PDF')}
       </div>
-      <p class="subtitle-center">Consigue tu libro ahora online en:</p>
-      <div class="stores">{st}</div>
-      <p class="subtitle-center">O pídelo en tu librería más cercana.</p>
     </article>
     <aside class="sidebar">
-      <div class="card"><a href="/productos/#libro-firmado"><img src="/img/libro-portada.jpg" alt="Portada del libro Conoce el Virayoga" width="645" height="972" loading="lazy"></a></div>
+      <div class="card"><img src="/img/libro-portada.jpg" alt="Portada del libro Conoce el Virayoga" width="645" height="972" loading="lazy"></div>
       <div class="card">
         <h3>¿Quieres enterarte de los próximos eventos? Déjanos tu correo y te informaremos de todo.</h3>
         <form name="newsletter-sidebar" method="POST" action="/gracias/" data-netlify="true" netlify-honeypot="bot-field">
@@ -339,143 +405,159 @@ def libro():
   </div>
 </div>
 {newsletter()}'''
-    book = {"@context": "https://schema.org", "@type": "Book", "name": "Conoce el Virayoga por Arjuna, el canalla del yoga",
-            "author": {"@type": "Person", "name": "Alberto López «Arjuna»"}, "isbn": "847091443X",
-            "publisher": "Beta Editorial", "inLanguage": "es", "image": DOMAIN + "/img/libro-portada.jpg"}
-    page('/mi-libro/', 'Mi libro · Conoce el Virayoga por Arjuna, el canalla del yoga',
-         'Un libro de superación: cómo cambié mi vida gracias al yoga y las artes marciales y cómo nació el Virayoga. Cómpralo online o firmado por Arjuna.',
-         body, hero='cab-libro.jpg', hero_title='Mi libro', crumb='Mi libro', image='libro-portada.jpg', schema=book)
+    book = {"@context": "https://schema.org", "@type": "Book", "name": "Conoce el Virayoga con Arjuna, el canalla del yoga",
+            "author": {"@type": "Person", "name": "Alberto López «Arjuna»"}, "bookFormat": "https://schema.org/EBook",
+            "inLanguage": "es", "image": DOMAIN + "/img/libro-portada.jpg",
+            "offers": {"@type": "Offer", "price": "9.95", "priceCurrency": "EUR", "url": DOMAIN + "/mi-libro/"}}
+    page('/mi-libro/', 'Mi libro en PDF · Conoce el Virayoga con Arjuna, el canalla del yoga',
+         'Un libro de superación: cómo cambié mi vida gracias al yoga y las artes marciales y cómo nació el Virayoga. Cómpralo en PDF por 9,95 €.',
+         body, hero='cab-libro.jpg', hero_title='Mi libro', crumb='<a href="/sobre-mi-creador-de-virayoga/">Sobre mí</a> / Mi libro', image='libro-portada.jpg', schema=book)
 
 # ---------------------------------------------------------------- FORMACIÓN VIRAYOGA
+# Una única formación (formulario de inicio, nov. 2026): las 9 sesiones son la estructura del método, no un curso aparte.
 def virayoga():
     body = f'''
 <article class="narrow content">
-  <h2 class="quote-title">El Virayoga, el yoga del guerrero</h2>
-  <p>Virayoga significa el yoga del guerrero. Por esta razón, la práctica de Virayoga quiere despertar nuestro poder interno. Un poder que está íntegramente relacionado con la actitud con la que afrontamos la vida.</p>
-  <p>Empoderamiento, presencia, lateralidad y autoconfianza son las principales palabras que definen este nuevo estilo de yoga. Del Hatha Yoga tradicional y de diferentes artes marciales nace una nueva forma de sentir el yoga.</p>
-  <p>Su objetivo principal es poder aprovecharnos de los beneficios que nos aportan ambas disciplinas. Trabajando más profundamente nuestro cuerpo, potenciando como nunca nuestro sistema motriz y aportándole la salud necesaria para su buen funcionamiento.</p>
-  <p>A nivel mental, es un yoga que nos fortalece el alma aportándonos autoconfianza, equilibrio y toma de conciencia. La integración de las artes marciales nos hace sentir más seguros de nosotros mismos, mejorando nuestra autoestima y actitud de superación.</p>
-  <p>Todo esto sin olvidar que estamos practicando yoga y es únicamente en el movimiento donde se esconden las técnicas marciales. Es difícil de explicar pero fácil de experimentar. Así que te invito a probar el Virayoga, para que sientas en tu propia piel todo lo que te puede aportar. <a href="/servicios-de-virayoga/">Ver actividades aquí</a>.</p>
+  <h2 class="quote-title">Formación de Virayoga</h2>
+  <p class="lead">¿Qué pasaría si, en lugar de obsesionarte con tus debilidades, entrenaras tus fortalezas?</p>
+  <p>El Virayoga es un sistema de yoga que une el <strong>Hatha Yoga</strong> tradicional, las <strong>artes marciales</strong> y la <strong>psicología aplicada</strong>. Trabajas todo el cuerpo en los 360º de la esterilla y, mientras tanto, la mente no tiene tiempo de irse a otra parte: estás presente sí o sí.</p>
+  <p>La formación es una sola y completa: la <strong>formación total de Virayoga</strong>. Te da una base técnica y psicológica sólida para dominar tu práctica, crear tus propias clases y llevar la actitud Vira a tu día a día.</p>
   <div class="gallery reveal"><img src="/img/vira-salto.jpg" alt="Patada marcial de Virayoga junto al mar" loading="lazy"><img src="/img/vira-equilibrio.jpg" alt="Postura de equilibrio de Virayoga" loading="lazy"><img src="/img/india-arcos.jpg" alt="Postura de Virayoga en un palacio de India" loading="lazy"></div>
-  <h2>Las 9 sesiones</h2>
-  <p>El Virayoga se estructura en 9 sesiones. Cada una de ellas tiene una tipología de técnicas marciales diferente y se relaciona con cada uno de los 9 estadios del camino del guerrero: <strong>Proyección, Respeto, Fuerza, Anticipación, Resiliencia, Virtudes, Respuesta, Liberación y Fluir</strong>.</p>
-  <p>La práctica de Virayoga nos permite trabajar nuestro cuerpo y mente, aprendiendo técnicas marciales encubiertas. Es importante tener presente que en todo momento estamos practicando yoga. Únicamente nos daremos cuenta de las técnicas marciales durante el despiece de la postura. La diferencia con otros tipos de yoga está en el movimiento entre las asanas, momento en el que las técnicas marciales se encuentran encubiertas. Estos movimientos van a despertar en nuestro ser nuevos aspectos que desarrollarán nuestra fortaleza interior.</p>
-</article>
-<div class="wrap">{camino_html('Las 9 sesiones del Virayoga', 'Cada sesión trabaja una etapa del camino del guerrero, con su sankalpa (intención).')}</div>
-<article class="narrow content">
-  <h2>La psicología del Virayoga</h2>
-  <p>La psicología del Virayoga es un proceso evolutivo mediante el cual vas conociendo y desarrollando nuevos aspectos para mejorar tu actitud y visión ante la vida.</p>
-  <p>Es un proceso de autoconocimiento y fortalecimiento emocional. Después de esta experiencia y pasado el año de formación ya no vuelves a ser la misma persona. Aprendes de ti mismo, te autoconoces y te valoras de forma diferente. Esta evolución viene dada por los 9 estadios del camino del guerrero, momento en el que la persona se va enfrentando a sus dificultades, miedos y fortalezas para conseguir despertar su guerrero/a interno.</p>
 
-  <div style="background:var(--soft);padding:40px;margin:3em 0" class="reveal">
-    <h2 style="margin-top:0">¿Quieres ser profesor de Virayoga?</h2>
-    <h3>Formación de Virayoga online</h3>
-    <p>Esta formación de Virayoga está pensada para conocer las bases del Virayoga a través de sus 9 sesiones. Aprender las asanas de hatha y los movimientos de artes marciales que nos llevan a las asanas, construyendo así una práctica de yoga fluida y dinámica.</p>
-    <p>La formación es de <strong>200 h</strong> y se estructura en seminarios mensuales, clases semanales en las que pones en práctica las sesiones de Virayoga y un retiro al final del curso en el que evidenciarás todos los cambios que la formación ha hecho en ti.</p>
-    <h3>Objetivos de la formación</h3>
-    <ul>
-      <li>Profundizar en la práctica de Virayoga a través de la diseminación de movimientos y asanas para poder adaptar mejor la práctica a diferentes públicos.</li>
-      <li>Adquirir conocimiento de diferentes pranayamas, meditaciones, técnicas de relajación y mantras que complementarán tu práctica de Virayoga.</li>
-      <li>Aprender nuevos movimientos avanzados.</li>
-      <li>Darte a conocer un nuevo estilo de yoga nacido del Hatha Yoga tradicional y de las artes marciales, permitiéndote vivir en primera persona los beneficios de estas dos disciplinas.</li>
-      <li>Proporcionarte todo el conocimiento necesario para ser un buen instructor de Virayoga.</li>
-      <li>Profundizar en tu autoconocimiento a través de la práctica para empoderarte y despertar tu guerrerx interior.</li>
-      <li>Abrirte camino a una forma diferente de afrontar y vivir la vida. Entender qué es la actitud Vira.</li>
-      <li>Mejorar la condición física a través del trabajo psicomotriz, el fortalecimiento del cuerpo, el equilibrio, la flexibilidad, etc.</li>
-    </ul>
-    <h4>¿A quién va dirigido?</h4>
-    <p>Esta formación va dirigida a profesores de Virayoga que quieren conseguir la especialización en esta disciplina para complementar su formación inicial en Virayoga.</p>
-    <h4>¿Qué aprenderás?</h4>
-    <ul>
-      <li>Los ajustes, adaptaciones, beneficios y contraindicaciones de las asanas y movimientos de Virayoga para adaptar mejor las clases a diferentes niveles.</li>
-      <li>Los 9 pranayamas que se practican en cada sesión.</li>
-      <li>Diferentes meditaciones y técnicas de relajación.</li>
-      <li>Los movimientos avanzados de las sesiones de Virayoga.</li>
-    </ul>
-    <h4>Metodología</h4>
-    <p>Formación teórico-práctica que incluye:</p>
-    <ul><li>Manual didáctico.</li><li>Tutorías de acompañamiento y mejora.</li><li>Descuento en retiros y viajes.</li></ul>
-    <p><strong>Online y presencial en Barcelona.</strong></p>
-    <p><strong>Fechas:</strong> ¡formaciones ininterrumpidas! Escríbeme y te cuento: <a href="mailto:{EMAIL}">{EMAIL}</a></p>
-    <p><a class="btn" href="/contacta/">¡Quiero formarme!</a> &nbsp; <a class="btn ghost" href="/productos/">Ver material de formación</a></p>
+  <h2>¿Para quién es?</h2>
+  <div class="profiles">
+    <div class="profile reveal"><h4>Si ya das clases de yoga</h4><p>Sientes que repites siempre lo mismo y que a tus clases les falta fondo. Aquí encuentras un método con personalidad propia y herramientas reales para acompañar a tu alumnado.</p></div>
+    <div class="profile reveal"><h4>Si quieres tu propia práctica</h4><p>Practicas yoga o artes marciales y quieres entender el porqué de cada movimiento. Te llevas un sistema completo, ordenado y fácil de seguir en tu día a día.</p></div>
+    <div class="profile reveal"><h4>Si empiezas de cero</h4><p>Nunca has hecho yoga, o casi, pero quieres trabajarte: ganar fuerza física y mental, ordenar tus ideas y confiar más en ti. No necesitas ser flexible; necesitas ganas.</p></div>
   </div>
-  <h2 class="quote-title center">"Las asanas y el crecimiento personal encienden el fuego de la actitud Vira"<br><small style="font-size:.6em">Arjuna</small></h2>
+  <p><strong>No es para ti</strong> si buscas un yoga solo relajante, si para ti el yoga es únicamente hacer posturas o si quieres coleccionar un título rápido sin implicarte. Aquí hay trabajo, y del bueno.</p>
+
+  <h2>Las 9 sesiones</h2>
+  <p>El método se ordena en 9 sesiones. Cada una trabaja una cualidad psicológica con su <em>sankalpa</em> (intención) y su tipo de técnicas marciales: <strong>Proyección, Respeto, Fuerza, Anticipación, Resiliencia, Virtudes, Respuesta, Liberación y Fluir</strong>.</p>
 </article>
-{testimonials_html('Testimonios de la formación')}
+<div class="wrap">{camino_html('Las 9 sesiones del Virayoga', 'Cada sesión es una etapa del camino del guerrero, con su sankalpa.')}</div>
+<article class="narrow content">
+  <h2>Lo que te llevas</h2>
+  <ul>
+    <li><strong>Una estructura técnica muy clara.</strong> Cada sesión sigue un orden pensado (llaves, preparación vertebral, cardio, encadenamientos, fuerza, equilibrio, torsiones, invertidas…). Combinando sus partes tienes un abanico enorme de clases diferentes.</li>
+    <li><strong>Criterio propio.</strong> Como has vivido todo el recorrido en tu cuerpo, sabes adaptar las secuencias a cada persona y crear las tuyas sin perder la esencia.</li>
+    <li><strong>Herramientas para acompañar.</strong> La parte psicológica de las 9 sesiones te ayuda a guiar clases que van hacia dentro y a sostener a tu alumnado de forma natural.</li>
+    <li><strong>Un cambio que se nota fuera de la esterilla.</strong> Más claridad, más seguridad y una actitud distinta ante lo que te pasa. Sin promesas mágicas: el método te da las herramientas y el resultado depende de tu práctica.</li>
+  </ul>
+  <h2>Cómo es</h2>
+  <p>Formación online, por bloques y a tu ritmo, con autoevaluaciones y acompañamiento cercano de Arjuna y del equipo de Virayoga. Nos adaptamos a ti y a tu momento: mirar hacia dentro a veces remueve, y aquí tienes una mano amiga.</p>
+  <div class="buy-box reveal">
+    <h3>¿Damos el paso?</h3>
+    <p>Escríbeme y te cuento fechas, precio y cómo empezar. Sin presiones: primero resolvemos tus dudas.</p>
+    <p><a class="btn" href="/contacta/?asunto=Formación%20Virayoga">¡Quiero formarme!</a> &nbsp; <a class="btn ghost" href="/test-guerrero/">Haz el test: ¿qué guerrero eres?</a></p>
+  </div>
+  <h2 class="quote-title center">«Las asanas y el crecimiento personal encienden el fuego de la actitud Vira»<br><small style="font-size:.6em">Arjuna</small></h2>
+</article>
+{testimonials_html('Testimonios de Virayoga')}
+{hire_html()}
 {newsletter()}'''
-    course = {"@context": "https://schema.org", "@type": "Course", "name": "Formación de Virayoga (200 h)",
-              "description": "Formación de 200 h para conocer las bases del Virayoga a través de sus 9 sesiones. Online y presencial en Barcelona.",
+    course = {"@context": "https://schema.org", "@type": "Course", "name": "Formación de Virayoga",
+              "description": "Formación total de Virayoga: Hatha Yoga, artes marciales y psicología aplicada en 9 sesiones. Online, con acompañamiento cercano.",
               "provider": {"@type": "Person", "name": "Alberto López «Arjuna»", "url": DOMAIN + "/"}, "inLanguage": "es"}
-    page('/virayoga/', 'Formación Virayoga · El yoga del guerrero · Yoga con Arjuna',
-         'Descubre el Virayoga, el yoga del guerrero que fusiona artes marciales, crecimiento personal y yoga tradicional. Formación de 200 h online y presencial en Barcelona.',
+    page('/virayoga/', 'Formación de Virayoga · Yoga, artes marciales y psicología · Yoga con Arjuna',
+         'La formación total de Virayoga: Hatha Yoga, artes marciales y psicología en 9 sesiones. Para profes de yoga, practicantes y quien empieza de cero.',
          body, hero='cab-virayoga.jpg', hero_title='Virayoga', crumb='Formación Virayoga', image='vira-salto.jpg', schema=course)
 
-# ---------------------------------------------------------------- ACTIVIDADES
+# ---------------------------------------------------------------- CONTRÁTAME (antes «Actividades»; misma dirección)
 def actividades():
+    services = [
+        ('studio-1.jpg', 'Escuelas de yoga', 'Masterclasses y talleres de Virayoga para tu escuela: tu alumnado prueba algo que no ha visto nunca y tú le das un empujón a tu centro.'),
+        ('vira-equilibrio.jpg', 'Empresas', 'Sesiones para equipos que necesitan moverse, soltar tensión y ganar foco. Cuerpo y cabeza en la misma sala, por fin.'),
+        ('arjuna-mar.jpg', 'Hoteles y eventos', 'Workshops de yoga y Virayoga para hoteles, encuentros y eventos en Barcelona y alrededores. También con música Bhakti en directo.'),
+        ('ag-street.jpg', 'Celebraciones privadas', 'Despedidas de soltera, cumpleaños o un plan distinto con amigos: una clase de yoga con artes marciales que se recuerda (y se ríe).'),
+    ]
+    cards = ''.join(f'<div class="ag-card reveal"><div class="img" style="background-image:url(/img/{i})" role="img" aria-label="{html.escape(t)}"></div><div class="body"><h3>{t}</h3><p>{d}</p></div></div>' for i, t, d in services)
     body = f'''
 <article class="narrow content">
-  <p class="lead">Yoga con Arjuna se adapta a tus necesidades. Es por eso que te ofrezco una gran variedad de servicios para que encuentres la mejor forma de practicar yoga.</p>
-  <h2 class="quote-title">Clases</h2>
-  <h4>Clases grupales</h4>
-  <p>¿Quieres practicar un sistema de yoga que te aporte equilibrio, flexibilidad y fuerza? Te ofrezco clases de Hatha Yoga y clases de Virayoga.</p>
-  <p>Son clases adaptadas a todos los niveles, donde además de la práctica de yoga/Virayoga realizaremos pranayamas, meditaciones y relajaciones. Todo esto para mejorar la actitud postural, desarrollar el sistema motriz y sentirte mejor contigo mism@.</p>
-  <p><a class="btn ghost" href="/agenda/">Ver horarios</a></p>
-  <h4>Clases privadas</h4>
-  <p>¿No te van bien los horarios? ¿Quieres elegir la hora y el lugar para practicar y poder disfrutar de la máxima atención de un profesor?</p>
-  <p>Lo que estás buscando son las clases particulares, donde te acompañaré a profundizar al máximo en la práctica y donde empezarás a notar todos los beneficios de una forma más rápida.</p>
-  <p><a class="btn" href="/contacta/">¡Contáctame!</a></p>
+  <p class="lead">¿Quieres que lleve el Virayoga a tu escuela, a tu empresa, a tu hotel o a tu celebración? Cuéntame qué tienes en mente y lo preparamos a medida.</p>
+</article>
+<div class="wrap content ag-cats" style="padding-top:0">
+  <h2 class="cat">Contrata a Arjuna</h2>
+  <div class="ag-cards">{cards}</div>
 
-  <div class="gallery two reveal"><img src="/img/studio-1.jpg" alt="Clase de Virayoga en el estudio" loading="lazy"><img src="/img/clase-privada.jpg" alt="Arjuna corrigiendo una postura en una clase privada" loading="lazy"></div>
-  <h2 class="quote-title">Retiros</h2>
-  <p>¿Necesitas un respiro? ¿Estás cansado/a del día a día y no tienes un momento para ti? Lo que necesitas es un retiro.</p>
-  <p>Imagínate un fin de semana en el que solo pienses en ti. Donde puedes conectar contigo, cuidarte, sentirte bien, alimentar tu cuerpo y espíritu con una buena práctica y comida depurativa. ¿Suena bien, verdad?</p>
-  <p><a class="btn" href="/contacta/">¡Apúntate aquí!</a></p>
+  <h2 class="cat">Masterclasses y talleres</h2>
+  <div class="narrow" style="padding:0">
+    <ul>
+      <li><strong>Masterclass de Virayoga:</strong> yoga y artes marciales en los 360º de la esterilla. Para todos los niveles.</li>
+      <li><strong>Taller de transiciones marciales:</strong> «Esquiva la bala», «La zarpa del tigre» y otros movimientos con nombre propio.</li>
+      <li><strong>Taller de actitud Vira:</strong> la psicología de las 9 sesiones aplicada a la práctica y al día a día.</li>
+      <li><strong>Bhakti en directo:</strong> mantras, guitarra y voz para cerrar la práctica o para tu evento.</li>
+    </ul>
+    <p>¿Te interesa algo distinto? Pregúntame: casi todo se puede adaptar.</p>
+  </div>
+</div>
 
-  <div class="gallery two reveal"><img src="/img/meditacion-mar.jpg" alt="Meditación al amanecer junto al mar" loading="lazy"><img src="/img/playa.jpg" alt="Práctica de yoga en la playa" loading="lazy"></div>
-  <h2 class="quote-title">Formaciones</h2>
-  <h4>Formación de Virayoga</h4>
-  <p>¿Buscas una formación de yoga que te aporte algo diferente y que cambie tu vida?</p>
-  <p>Esta formación te proporciona las herramientas necesarias para convertirte en instructor/a de Virayoga, a la vez que despiertas tu guerrero/a interno gracias a un trabajo profundo de crecimiento personal. Formación de 200 h.</p>
-  <p><a class="btn" href="/virayoga/">¡Quiero saber más!</a></p>
+<div class="wrap content" style="padding-top:0">
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <h2 class="quote-title" style="margin-top:0">Cuéntame tu idea</h2>
+      <p>Dime qué tipo de evento es, dónde y cuántas personas seréis. Te contesto con una propuesta.</p>
+      <div class="row">{ICON['wa']}<a href="https://wa.me/{WHATSAPP}?text=Hola%20Arjuna%2C%20quiero%20contratarte%20para%20un%20evento" target="_blank" rel="noopener">Escríbeme por WhatsApp</a></div>
+      <div class="row">{ICON['mail']}<a href="mailto:{EMAIL}">{EMAIL}</a></div>
+    </div>
+    <form class="reveal" name="contratacion" method="POST" action="/gracias/" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="contratacion">
+      <p class="hidden"><label>No rellenar: <input name="bot-field"></label></p>
+      <label for="h-nombre">Nombre</label><input id="h-nombre" type="text" name="nombre" required autocomplete="name">
+      <label for="h-email">Correo electrónico</label><input id="h-email" type="email" name="email" required autocomplete="email">
+      <label for="h-tipo">Tipo de evento</label>
+      <select id="h-tipo" name="tipo"><option>Escuela de yoga (masterclass o taller)</option><option>Empresa</option><option>Hotel o evento</option><option>Despedida o celebración privada</option><option>Bhakti / música en directo</option><option>Otro</option></select>
+      <label for="h-mensaje">Fecha, lugar y número de personas</label><textarea id="h-mensaje" name="mensaje" required></textarea>
+      <label class="check"><input type="checkbox" name="acepto" required> <span>He leído y acepto la <a href="/politica-de-privacidad/">política de privacidad</a>.</span></label>
+      <button class="btn" type="submit">Enviar</button>
+    </form>
+  </div>
+</div>'''
+    svc = {"@context": "https://schema.org", "@type": "Service", "name": "Masterclasses, talleres y clases de Virayoga para escuelas, empresas, hoteles y eventos privados",
+           "provider": {"@type": "Person", "name": "Alberto López «Arjuna»", "url": DOMAIN + "/"}, "areaServed": "Barcelona, España",
+           "serviceType": "Yoga para eventos"}
+    page('/servicios-de-virayoga/', 'Contrata a Arjuna · Yoga para escuelas, empresas, hoteles y despedidas en Barcelona',
+         'Masterclasses y talleres de Virayoga para escuelas de yoga, yoga para empresas, workshops en hoteles y clases para despedidas de soltera y eventos privados en Barcelona.',
+         body, hero='cab-actividades.jpg', hero_title='Contrátame', crumb='<a href="/agenda/">Agenda y actividades</a> / Contrátame', image='cab-actividades.jpg', schema=svc)
 
-  <h2 class="quote-title">Viaje a India</h2>
-  <p>¿Quieres tener una experiencia inolvidable?</p>
-  <p>¿Quieres conocer las maravillas de la India? Un lugar donde incluso los más pobres te lo dan todo. Un país que no te deja indiferente. En nuestros viajes visitamos las zonas turísticas pero, sobre todo, vamos a ver la India profunda, donde su cultura y sus gentes te sorprenderán como nunca.</p>
-  <div class="gallery reveal"><img src="/img/india-jaipur-2.jpg" alt="Arjuna en Jaipur" loading="lazy"><img src="/img/india-arcos-2.jpg" alt="Virayoga en un palacio de India" loading="lazy"><img src="/img/india-arcos-3.jpg" alt="Postura marcial en India" loading="lazy"></div>
-  <p><a class="btn" href="/contacta/">¡Quiero ver más!</a></p>
+# ---------------------------------------------------------------- VIAJES A INDIA (nueva)
+def viajes_india():
+    faq = [
+        ('¿Es un retiro de yoga?', 'No. Un retiro suele ser varias clases al día en un mismo sitio. Esto es un viaje: recorremos India, conocemos su gente y su cultura, y practicamos cuando el viaje lo pide.'),
+        ('¿Cuánto dura?', 'Unos 15 días. Las fechas exactas del próximo viaje salen en la agenda.'),
+        ('¿Cómo reservo mi plaza?', 'Escríbeme y te envío el programa, el precio y lo que incluye. Para asegurar la plaza se paga una señal.'),
+        ('Tengo más dudas', 'Normal. Escríbeme por WhatsApp o por el formulario y lo hablamos.'),
+    ]
+    faq_html = ''.join(f'<details class="faq-item"><summary>{q}</summary><p>{a}</p></details>' for q, a in faq)
+    body = f'''
+<article class="narrow content">
+  <h2 class="quote-title">Viaje al origen del yoga</h2>
+  <p class="lead">Una vez al año me llevo a un grupo a India. No a la de las postales, sino a la India profunda: la que te remueve por dentro y te cambia la forma de mirar.</p>
+  <p>Llevo más de 15 años guiando grupos por este país. Visitamos lo imprescindible, pero sobre todo vamos donde está la vida de verdad: su gente, sus templos, su comida y esa capacidad de darlo todo que te deja sin palabras.</p>
+  <p>Yo voy a tu lado para cuidarte y enseñarte lo que he aprendido allí. Lo demás lo hace India.</p>
+  <div class="gallery reveal"><img src="/img/india-jaipur.jpg" alt="Arjuna en Jaipur" loading="lazy"><img src="/img/india-arcos-2.jpg" alt="Virayoga en un palacio de India" loading="lazy"><img src="/img/india-arcos-3.jpg" alt="Postura marcial en India" loading="lazy"><img src="/img/india-jaipur-2.jpg" alt="Grupo de viaje en Jaipur" loading="lazy"><img src="/img/arjuna-templo.jpg" alt="Arjuna frente a un templo" loading="lazy"><img src="/img/india-arcos.jpg" alt="Arcos de un palacio en India" loading="lazy"></div>
+  <div class="buy-box reveal">
+    <h3>Próximo viaje</h3>
+    <p>Fechas por concretar. Consulta la <a href="/agenda/">agenda</a> o escríbeme y te aviso en cuanto estén.</p>
+    <p><a class="btn" href="/contacta/?asunto=Viaje%20a%20India">Quiero información</a> &nbsp; <a class="btn ghost" href="https://wa.me/{WHATSAPP}?text=Hola%20Arjuna%2C%20quiero%20informaci%C3%B3n%20del%20viaje%20a%20India" target="_blank" rel="noopener">WhatsApp</a></p>
+  </div>
+  <h2>Preguntas frecuentes</h2>
+  <div class="faq">{faq_html}</div>
 </article>
 {newsletter()}'''
-    page('/servicios-de-virayoga/', 'Actividades de Virayoga · Clases, retiros, formación y viajes a India',
-         'Yoga con Arjuna se adapta a tus necesidades: clases grupales y privadas de Virayoga y Hatha Yoga, retiros, formación de 200 h y viajes a India.',
-         body, hero='cab-actividades.jpg', hero_title='Actividades', crumb='Actividades', image='cab-actividades.jpg')
+    trip = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+        {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]}
+    page('/viajes-india/', 'Viaje a India con Arjuna · Viaje al origen del yoga',
+         'Viaja a la India profunda con Arjuna: unos 15 días con más de 15 años de experiencia guiando grupos. No es un retiro, es un viaje que te cambia por dentro.',
+         body, hero='india-arcos-2.jpg', hero_title='Viajes a India', crumb='<a href="/agenda/">Agenda y actividades</a> / Viajes a India', image='india-jaipur.jpg', schema=trip)
 
-# ---------------------------------------------------------------- AGENDA
+# ---------------------------------------------------------------- AGENDA Y ACTIVIDADES
 def agenda():
     def card(img, title, html_body):
         return f'<div class="ag-card reveal"><div class="img" style="background-image:url(/img/{img})" role="img" aria-label="{html.escape(title)}"></div><div class="body"><h3>{title}</h3>{html_body}</div></div>'
     mail = f'<a href="mailto:{EMAIL}">{EMAIL}</a>'
-    wa = f'<a href="https://wa.me/{WHATSAPP}" target="_blank" rel="noopener">WhatsApp 619 945 481</a>'
     body = f'''
 <div class="wrap content ag-cats">
-  <h2 class="cat">Clases online</h2>
-  <div class="ag-cards">
-    {card('ag-online.jpg', 'Virayoga online', f'<p>Tenemos clases online vía Zoom, con la profesionalidad y la autenticidad de siempre: clases regulares y privadas.</p><p>Las clases se quedan guardadas por si no te va bien la hora. {mail}</p>')}
-    {card('ag-cursos.jpg', 'Cursos online', '<p>Namaste warriors, puedes tener cursos online con una gran calidad audiovisual y muy económicos. Son para toda la vida y puedes practicarlos desde cualquier lugar.</p><p><a class="btn" href="/productos/">Ver cursos</a></p>')}
-  </div>
-
-  <h2 class="cat">Clases regulares</h2>
-  <div class="ag-cards">
-    {card('studio-1.jpg', 'Arjuna Yoga Studio', f'<p><strong>Virayoga los miércoles a las 19 h</strong> en Martorelles.</p><p>Reservas por {wa}.</p>')}
-    {card('studio-2.jpg', 'Espai Kairos', '<p><strong>Los jueves en Terrassa a las 18:45 h</strong>: iniciación al Vinyasa con Arjuna.</p>')}
-    {card('clase-privada.jpg', 'Yoga con Arjuna privadas', '<p>Virayoga, Hatha Yoga, meditación, Reiki y el masaje ayurveda son los pilares de la verdadera esencia de «Arjuna».</p><p>¿No te van bien los horarios? Las clases particulares te permiten elegir hora y lugar y disfrutar de la máxima atención.</p><p><a class="btn" href="/contacta/">Reservar</a></p>')}
-  </div>
-
-  <h2 class="cat">Viajes y retiros</h2>
-  <div class="ag-cards">
-    {card('india-jaipur-2.jpg', 'Viajes a India', f'<p>Tras 17 años de experiencia viajando con grupos, mi intención es mostrarte el verdadero néctar de este país.</p><p>Si India te llama, escríbeme y te cuento. {mail}</p>')}
-    {card('ag-street.jpg', 'Street Virayoga', '<p>Práctica de Virayoga gratuita en la Plaça Reial de Barcelona, el primer sábado de cada mes. ¡Solo trae tu esterilla!</p>')}
-  </div>
-
   <h2 class="cat">Próximos eventos</h2>
   <div class="events" data-sheet="{html.escape(AGENDA_CSV)}">
     <div class="event reveal">
@@ -484,9 +566,14 @@ def agenda():
       <a class="btn" href="mailto:{EMAIL}?subject=Street%20Virayoga%2012%20diciembre">Apuntarme</a>
     </div>
     <div class="event reveal">
+      <div class="date">19-20 feb<br><small style="font-size:.6em">2027</small></div>
+      <div><h3>Taller de Virayoga en Murcia</h3><p>Dos días de Virayoga para conocer el método en persona.</p></div>
+      <a class="btn ghost" href="/contacta/">Más info</a>
+    </div>
+    <div class="event reveal">
       <div class="date">Fechas<br><small style="font-size:.6em">a concretar</small></div>
-      <div><h3>Viaje retiro India</h3><p>¡Volvemos a India! Con más de 15 años de experiencia sigo guiando a aventurerxs por este mágico país. ¿Te animas?</p></div>
-      <a class="btn" href="/contacta/">Más info</a>
+      <div><h3>Viaje a India</h3><p>¡Volvemos a India! El viaje al origen del yoga, con más de 15 años de experiencia guiando grupos.</p></div>
+      <a class="btn" href="/viajes-india/">Más info</a>
     </div>
     <div class="event reveal">
       <div class="date">2027<br><small style="font-size:.6em">próximamente</small></div>
@@ -494,16 +581,36 @@ def agenda():
       <a class="btn ghost" href="/contacta/">Avísame</a>
     </div>
   </div>
+
+  <h2 class="cat">Formación y viajes</h2>
+  <div class="ag-cards">
+    {card('vira-salto.jpg', 'Formación de Virayoga', '<p>La formación total de Virayoga: yoga, artes marciales y psicología en 9 sesiones, online y con acompañamiento cercano.</p><p><a class="btn" href="/virayoga/">Conoce la formación</a></p>')}
+    {card('india-jaipur-2.jpg', 'Viajes a India', '<p>Una vez al año, unos 15 días por la India profunda. No es un retiro: es un viaje que te cambia la forma de mirar.</p><p><a class="btn" href="/viajes-india/">Ver el viaje</a></p>')}
+  </div>
+
+  <h2 class="cat">Eventos</h2>
+  <div class="ag-cards">
+    {card('ag-street.jpg', 'Street Virayoga', '<p>Práctica de Virayoga gratuita en la Plaça Reial de Barcelona, el primer sábado de cada mes. Al aire libre, con gente de todas partes y buen rollo. ¡Solo trae tu esterilla!</p>')}
+    {card('ag-tenerife.jpg', 'Talleres y masterclasses', '<p>Talleres por toda España (Tenerife, Murcia…) y masterclasses en escuelas. Mira las fechas arriba o lleva el Virayoga a tu centro.</p><p><a class="btn ghost" href="/servicios-de-virayoga/">Contrátame</a></p>')}
+  </div>
+
+  <h2 class="cat">Clases</h2>
+  <div class="ag-cards">
+    {card('ag-online.jpg', 'Virayoga online', f'<p>Clases por Zoom con la autenticidad de siempre. Se quedan grabadas por si no te va bien la hora. Escríbeme a {mail}.</p>')}
+    {card('studio-2.jpg', 'Espai Kairos', '<p><strong>Los jueves en Terrassa a las 18:45 h</strong>: iniciación al Vinyasa con Arjuna.</p>')}
+    {card('studio-1.jpg', 'Clases regulares', '<p><strong>Virayoga los miércoles a las 19 h</strong> en Martorelles.</p><p>¿Quieres venir o prefieres una clase privada? Escríbeme y lo hablamos.</p><p><a class="btn" href="/contacta/?asunto=Clases">Contáctame</a></p>')}
+  </div>
 </div>
+{hire_html()}
 {newsletter()}'''
     ev = {"@context": "https://schema.org", "@type": "Event", "name": "Street Virayoga en Plaça Reial",
           "startDate": "2026-12-12T11:00:00+01:00", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
           "eventStatus": "https://schema.org/EventScheduled", "isAccessibleForFree": True,
           "location": {"@type": "Place", "name": "Plaça Reial", "address": "Plaça Reial, Barcelona"},
           "organizer": {"@type": "Person", "name": "Arjuna", "url": DOMAIN + "/"}, "image": DOMAIN + "/img/ag-street.jpg"}
-    page('/agenda/', 'Agenda de eventos · Clases, retiros y viajes · Yoga con Arjuna',
-         'Clases de Virayoga online y presenciales (Martorelles, Terrassa), Street Virayoga en Barcelona, retiros y viajes a India. Consulta la agenda de Arjuna.',
-         body, hero='cab-agenda.jpg', hero_title='Agenda', crumb='Agenda', image='ag-street.jpg', schema=ev)
+    page('/agenda/', 'Agenda y actividades · Formación, viajes a India, talleres y Street Virayoga · Yoga con Arjuna',
+         'Próximos eventos de Arjuna: talleres y masterclasses de Virayoga, Street Virayoga en Barcelona, viajes a India, formación y clases online y en Martorelles.',
+         body, hero='cab-agenda.jpg', hero_title='Agenda y actividades', crumb='Agenda y actividades', image='ag-street.jpg', schema=ev)
 
 # ---------------------------------------------------------------- PRENSA
 PRESS = [
@@ -550,18 +657,12 @@ def prensa():
 # ---------------------------------------------------------------- PRODUCTOS (nuevo)
 # Sustituye 'stripe' por el Payment Link de cada producto (https://buy.stripe.com/...).
 PRODUCTS = [
- dict(id='libro-firmado', tag='Libro', title='Libro «Conoce el Virayoga» firmado', img='libro-portada.jpg', book=True,
-      desc='La historia de Arjuna y el método Virayoga, firmado y dedicado. Envío a domicilio en España.', price='XX €', stripe=''),
- dict(id='curso-online', tag='Curso online', title='Curso online de Virayoga: las 9 sesiones', img='india-arcos-2.jpg',
-      desc='Practica las 9 sesiones del camino del guerrero desde casa, a tu ritmo y para siempre. Vídeos en alta calidad.', price='XX €', stripe=''),
- dict(id='formacion-introduccion', tag='Formación', title='Formación Virayoga · Introducción', img='india-arcos-3.jpg',
-      desc='Manual de formación en PDF, vídeos de la sesión 1 (estiramientos, llaves y vaciados) y examen de certificación.', price='XX €', stripe=''),
- dict(id='manual-trabajo', tag='Recurso digital', title='Manual de trabajo Virayoga (PDF)', img='vira-mar.jpg',
-      desc='El cuaderno de trabajo del alumno: posturas, pranayamas y meditaciones para acompañar tu práctica.', price='XX €', stripe=''),
- dict(id='bono-clases', tag='Clases', title='Bono de clases privadas', img='clase-privada.jpg',
-      desc='Sesiones individuales de Virayoga, Hatha Yoga o meditación, online o presenciales. Tú eliges día y hora.', price='XX €', stripe=''),
+ dict(id='libro-pdf', tag='Libro en PDF', title='Libro «Conoce el Virayoga con Arjuna, el canalla del yoga» (PDF)', img='libro-portada.jpg', book=True,
+      desc='Mi historia y la del Virayoga, contada sin filtros. Descarga inmediata para leer en el móvil, la tablet o el ordenador.', price='9,95 €', stripe=''),
+ dict(id='formacion-virayoga', tag='Formación', title='Formación total de Virayoga', img='india-arcos-3.jpg',
+      desc='Yoga, artes marciales y psicología en 9 sesiones. Online, por bloques, con autoevaluaciones y acompañamiento cercano.', price='XX €', stripe=''),
  dict(id='reserva-india', tag='Viaje', title='Reserva tu plaza: viaje a India', img='india-jaipur.jpg',
-      desc='Paga la señal y asegura tu plaza en el próximo viaje a la India auténtica con Arjuna.', price='XX €', stripe=''),
+      desc='Paga la señal y asegura tu plaza en el próximo viaje al origen del yoga con Arjuna.', price='XX €', stripe=''),
 ]
 def productos():
     cards = ''
@@ -587,7 +688,7 @@ def productos():
 <div class="wrap content">
   <div class="narrow center" style="padding:0">
     <h2 class="quote-title">Lleva el Virayoga contigo</h2>
-    <p class="lead">El libro, cursos online, material de formación y reservas. Pago seguro con tarjeta, Apple Pay o Google Pay.</p>
+    <p class="lead">El libro en PDF, la formación de Virayoga y la reserva del viaje a India. Pago seguro con tarjeta, Apple Pay o Google Pay.</p>
   </div>
   <div class="products" style="margin-top:48px">{cards}
   </div>
@@ -601,8 +702,8 @@ def productos():
 {testimonials_html()}
 {newsletter()}'''
     items = [{"@type": "ListItem", "position": i + 1, "url": f"{DOMAIN}/productos/#{p['id']}", "name": p['title']} for i, p in enumerate(PRODUCTS)]
-    page('/productos/', 'Productos y recursos · Libro, cursos online y formación · Yoga con Arjuna',
-         'Compra el libro firmado «Conoce el Virayoga», cursos online, material de formación y bonos de clases con Arjuna. Pago seguro.',
+    page('/productos/', 'Productos · Libro en PDF, formación de Virayoga y viaje a India · Yoga con Arjuna',
+         'Compra el libro «Conoce el Virayoga» en PDF, la formación total de Virayoga y reserva tu plaza en el viaje a India con Arjuna. Pago seguro.',
          body, hero='hero-6.jpg', hero_title='Productos', crumb='Productos', image='libro-portada.jpg',
          schema={"@context": "https://schema.org", "@type": "ItemList", "itemListElement": items})
 
@@ -613,8 +714,8 @@ def contacta():
   <div class="contact-grid">
     <div class="contact-info reveal">
       <h2 class="quote-title" style="margin-top:0">Contacta conmigo</h2>
-      <p>¡Hola! Ponte en contacto conmigo para saber más de cualquiera de mis servicios, dudas y comentarios.</p>
-      <p>Te contestaré tan pronto como me sea posible. ¡Muchas gracias!</p>
+      <p>¡Hola! Escríbeme para lo que necesites: la formación, el viaje a India, contratarme para un evento o una clase, o simplemente una duda.</p>
+      <p>Te contesto en cuanto pueda. Si tienes prisa, el WhatsApp es más rápido.</p>
       <div style="margin-top:28px">
         <div class="row">{ICON['mail']}<a href="mailto:{EMAIL}">{EMAIL}</a></div>
         <div class="row">{ICON['wa']}<a href="https://wa.me/{WHATSAPP}" target="_blank" rel="noopener">WhatsApp 619 945 481</a></div>
@@ -629,7 +730,7 @@ def contacta():
       <label for="c-email">Correo electrónico</label><input id="c-email" type="email" name="email" required autocomplete="email">
       <label for="c-asunto">Asunto</label>
       <select id="c-asunto" name="asunto">
-        <option>Clases</option><option>Clases privadas</option><option>Formación Virayoga</option><option>Retiros</option><option>Viaje a India</option><option>Libro y productos</option><option>Prensa</option><option>Otro</option>
+        <option>Formación Virayoga</option><option>Viaje a India</option><option>Contratar a Arjuna (escuelas, empresas, eventos)</option><option>Clases</option><option>Bhakti / música</option><option>Libro y productos</option><option>Prensa</option><option>Otro</option>
       </select>
       <label for="c-mensaje">Mensaje</label><textarea id="c-mensaje" name="mensaje" required></textarea>
       <label class="check"><input type="checkbox" name="acepto" required> <span>He leído y acepto la <a href="/politica-de-privacidad/">política de privacidad</a>.</span></label>
@@ -638,7 +739,7 @@ def contacta():
   </div>
 </div>'''
     page('/contacta/', 'Contacta conmigo · Yoga con Arjuna · Virayoga, despierta tu poder interno',
-         'Contacta con Arjuna para recibir información de clases de Virayoga, formación, retiros, viajes a India y productos.',
+         'Contacta con Arjuna para recibir información de la formación de Virayoga, los viajes a India, masterclasses, eventos, clases y productos.',
          body, hero='cab-contacta.jpg', hero_title='Contacta', crumb='Contacta', image='cab-contacta.jpg')
 
 # ---------------------------------------------------------------- CAMINO DEL GUERRERO (9 sesiones) Y TEST
@@ -689,29 +790,29 @@ QUIZ = [
         ('Ya practico Virayoga', ('nivel', 'vira')), ('Ya doy clases de yoga', ('nivel', 'profe'))]),
     ('¿Cómo te gustaría practicar?', [
         ('Desde casa, a mi ritmo', ('modo', 'casa')), ('En persona, en clase con Arjuna', ('modo', 'clase')),
-        ('Con atención 100 % personal', ('modo', 'privada')), ('Viviendo una experiencia: viaje o retiro', ('modo', 'viaje'))]),
+        ('Con atención 100 % personal', ('modo', 'privada')), ('Viviendo una experiencia: un viaje a India', ('modo', 'viaje'))]),
     ('¿Qué inversión te encaja ahora mismo?', [
-        ('Empezar con algo económico', ('pres', 'bajo')), ('Un curso o un bono de clases', ('pres', 'medio')),
+        ('Empezar con algo económico', ('pres', 'bajo')), ('Algunas clases o un taller', ('pres', 'medio')),
         ('Una formación completa', ('pres', 'alto')), ('Prefiero hablarlo antes con Arjuna', ('pres', 'hablar'))]),
 ]
 
 # Recursos que puede recomendar el test (id de PRODUCTS o páginas de la web)
 QUIZ_RES = {
-    'curso': dict(title='Curso online de Virayoga: las 9 sesiones', img='india-arcos-2.jpg', url='/productos/#curso-online',
-                  why='Practica desde casa las 9 sesiones del camino del guerrero. Empieza por la sesión {n}, {name}, que es la que más necesitas ahora.'),
-    'manual': dict(title='Manual de trabajo Virayoga (PDF)', img='vira-mar.jpg', url='/productos/#manual-trabajo',
-                   why='Ya conoces el Virayoga: el manual te ayuda a profundizar en la sesión {n}, {name}, con sus posturas, pranayama y meditación.'),
-    'formacion': dict(title='Formación de profesores de Virayoga', img='india-arcos-3.jpg', url='/virayoga/',
-                      why='Quieres enseñar: la formación de 200 h te lleva por las 9 sesiones, también la de {name}, para vivirlas y transmitirlas.'),
-    'intro': dict(title='Formación Virayoga · Introducción', img='india-arcos-3.jpg', url='/productos/#formacion-introduccion',
-                  why='La forma más económica de empezar a formarte: manual en PDF, vídeos de la sesión 1 y examen de certificación.'),
-    'clase': dict(title='Clases regulares con Arjuna', img='studio-1.jpg', url='/agenda/',
+    'curso': dict(title='Biblioteca: clases y prácticas gratuitas', img='vira-mar.jpg', url='/blog/',
+                  why='Empieza desde casa con las prácticas gratuitas y pon el foco en la sesión {n}, {name}, que es la que más necesitas ahora.'),
+    'manual': dict(title='Formación total de Virayoga', img='vira-salto.jpg', url='/virayoga/',
+                   why='Ya conoces el Virayoga: la formación te lleva a fondo por las 9 sesiones, empezando por entender bien la de {name}.'),
+    'formacion': dict(title='Formación total de Virayoga', img='india-arcos-3.jpg', url='/virayoga/',
+                      why='Quieres enseñar: la formación te lleva por las 9 sesiones, también la de {name}, para vivirlas y transmitirlas.'),
+    'intro': dict(title='Habla con Arjuna sobre la formación', img='india-arcos-3.jpg', url='/contacta/?asunto=Formación%20Virayoga',
+                  why='Cuéntanos tu momento y te explicamos cómo empezar la formación, sin presiones.'),
+    'clase': dict(title='Clases con Arjuna', img='studio-1.jpg', url='/agenda/',
                   why='Practica en grupo y en persona. Cuéntale a Arjuna que tu etapa es {name} y la trabajaréis juntos.'),
-    'privada': dict(title='Bono de clases privadas', img='clase-privada.jpg', url='/productos/#bono-clases',
-                    why='Sesiones a tu medida, online o presenciales, centradas en la etapa de {name}.'),
-    'viaje': dict(title='Viajes y retiros con Arjuna', img='india-jaipur.jpg', url='/agenda/',
-                  why='Vive el Virayoga fuera de la rutina: un viaje o retiro es el mejor espacio para trabajar la etapa de {name}.'),
-    'libro': dict(title='Libro «Conoce el Virayoga»', img='libro-portada.jpg', url='/mi-libro/',
+    'privada': dict(title='Clases privadas con Arjuna', img='clase-privada.jpg', url='/contacta/?asunto=Clases',
+                    why='Escríbele y organizáis sesiones a tu medida, centradas en la etapa de {name}.'),
+    'viaje': dict(title='Viaje a India con Arjuna', img='india-jaipur.jpg', url='/viajes-india/',
+                  why='Vive el Virayoga fuera de la rutina: el viaje al origen del yoga es el mejor espacio para trabajar la etapa de {name}.'),
+    'libro': dict(title='Libro «Conoce el Virayoga» en PDF', img='libro-portada.jpg', url='/mi-libro/',
                   why='La historia de Arjuna y la actitud Vira: el mejor punto de partida.'),
 }
 
@@ -773,7 +874,7 @@ YT_CHANNEL_ID = 'UCvABr1XkDwI3JPWX3LcYajw'   # la lista de subidas del canal es 
 POSTS = [
     ('practica', 'lozwmWKLfSU', 'Una práctica de Virayoga', 'Yoga y artes marciales en movimiento: así es una sesión de Virayoga.'),
 ]
-BLOG_CATS = [('practica', 'Clases y prácticas'), ('directo', 'Directos'), ('articulo', 'Artículos')]
+BLOG_CATS = [('practica', 'Clases y prácticas'), ('directo', 'Té con Arjuna (directos)'), ('articulo', 'Artículos')]
 
 def blog():
     cards = ''
@@ -790,20 +891,21 @@ def blog():
 </article>'''
     # Tarjetas «próximamente» para las categorías que aún no tienen contenido
     soon = {'practica': ('vira-equilibrio.jpg', 'Más prácticas en camino', 'Nuevas clases y prácticas guiadas para hacer en casa.'),
-            'directo': ('arjuna-templo.jpg', 'Los directos de Instagram', 'Las clases y charlas en directo de Arjuna, ahora guardadas aquí para verlas cuando quieras.'),
-            'articulo': ('meditacion-mar.jpg', 'Artículos', 'Textos sobre Virayoga, meditación, filosofía del yoga y viajes.')}
+            'directo': ('arjuna-templo.jpg', 'Té con Arjuna', 'Los directos de Instagram, ahora guardados aquí para verlos cuando quieras.')}
     have = {p[0] for p in POSTS}
     for t, (img, title, desc) in soon.items():
         if t not in have or t == 'practica':
             cards += f'''<article class="post reveal soon-card" data-type="{t}"><div class="img" style="background-image:url(/img/{img})" role="img" aria-label="{html.escape(title)}"></div>
   <div class="body"><span class="tag">{dict(BLOG_CATS)[t]}</span><h3>{title}</h3><p>{desc}</p><span class="soon">Próximamente</span></div></article>'''
-    filters = '<button class="on" data-f="all">Todo</button>' + ''.join(f'<button data-f="{k}">{v}</button>' for k, v in BLOG_CATS)
+    # «Artículos» solo aparece cuando haya alguno (en la reunión se acordó que no es prioritario)
+    cats = [(k, v) for k, v in BLOG_CATS if k != 'articulo' or 'articulo' in have]
+    filters = '<button class="on" data-f="all">Todo</button>' + ''.join(f'<button data-f="{k}">{v}</button>' for k, v in cats)
     uploads = 'UU' + YT_CHANNEL_ID[2:]
     body = f'''
 <section class="wrap content blog">
   <div class="narrow center">
     <h2 class="script-title">La biblioteca del guerrero</h2>
-    <p class="lead">Clases, prácticas, directos y artículos de Arjuna para practicar Virayoga desde donde estés.</p>
+    <p class="lead">Recursos gratuitos para practicar Virayoga desde donde estés: clases, prácticas y los directos del Té con Arjuna.</p>
   </div>
 
   <div class="yt-block reveal">
@@ -822,15 +924,15 @@ def blog():
   <div class="posts">{cards}</div>
 </section>
 {newsletter('newsletter-blog')}'''
-    page('/blog/', 'Blog y videoteca · Yoga con Arjuna · Clases, directos y artículos de Virayoga',
-         'Clases y prácticas de Virayoga en vídeo, directos de Instagram y artículos de Arjuna sobre yoga, meditación y filosofía.',
-         body, hero='vira-mar.jpg', hero_title='Blog', crumb='Blog', image='vira-mar.jpg')
+    page('/blog/', 'Biblioteca · Clases y prácticas gratuitas de Virayoga · Yoga con Arjuna',
+         'Recursos gratuitos de Virayoga: clases y prácticas en vídeo, los directos del Té con Arjuna y el canal de YouTube de Arjuna.',
+         body, hero='vira-mar.jpg', hero_title='Biblioteca', crumb='Biblioteca', image='vira-mar.jpg')
 
 # ---------------------------------------------------------------- LEGALES Y GRACIAS
 def legales():
     # Datos del titular pendientes: se marcan en amarillo para rellenarlos cuando el cliente los facilite
     def X(t): return f'<mark class="todo">[XXXX {t}]</mark>'
-    TIT, NIF, DIR, CIUDAD = X('nombre y apellidos del titular'), X('NIF'), X('dirección completa'), X('ciudad')
+    TIT, NIF, DIR, CIUDAD = 'Alberto López Espín', X('NIF'), X('dirección completa'), X('ciudad')
     mail = f'<a href="mailto:{EMAIL}">{EMAIL}</a>'
     upd = 'Última actualización: noviembre de 2026.'
     def art(h1, inner):
@@ -951,6 +1053,8 @@ def extras(urls):
   Cache-Control: public, max-age=86400
 /js/*
   Cache-Control: public, max-age=86400
+/audio/*
+  Cache-Control: public, max-age=2592000
 ''')
 
 if __name__ == '__main__':
@@ -959,10 +1063,11 @@ if __name__ == '__main__':
     os.makedirs(OUT)
     shutil.copytree(os.path.join(HERE, 'static'), OUT, dirs_exist_ok=True)
     shutil.copytree(os.path.join(HERE, 'img'), os.path.join(OUT, 'img'))
-    if os.path.isdir(os.path.join(HERE, 'video')):
-        shutil.copytree(os.path.join(HERE, 'video'), os.path.join(OUT, 'video'))
-    home(); sobre(); libro(); virayoga(); actividades(); agenda(); prensa(); productos(); blog(); test_guerrero(); contacta(); legales()
-    urls = [DOMAIN + p for p in ['/', '/sobre-mi-creador-de-virayoga/', '/mi-libro/', '/virayoga/', '/servicios-de-virayoga/',
+    for folder in ('video', 'audio'):
+        if os.path.isdir(os.path.join(HERE, folder)):
+            shutil.copytree(os.path.join(HERE, folder), os.path.join(OUT, folder))
+    home(); sobre(); libro(); virayoga(); actividades(); viajes_india(); agenda(); prensa(); productos(); blog(); test_guerrero(); contacta(); legales()
+    urls = [DOMAIN + p for p in ['/', '/sobre-mi-creador-de-virayoga/', '/mi-libro/', '/virayoga/', '/servicios-de-virayoga/', '/viajes-india/',
                                  '/agenda/', '/prensa/', '/productos/', '/blog/', '/test-guerrero/', '/contacta/', '/aviso-legal/', '/politica-de-privacidad/',
                                  '/politica-de-cookies/', '/condiciones-de-compra/']]
     extras(urls)
