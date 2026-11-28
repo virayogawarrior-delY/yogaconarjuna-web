@@ -454,7 +454,7 @@ def virayoga():
 
   <h2>¿Para quién es?</h2>
   <div class="profiles">
-    <div class="profile reveal"><h4>Si ya das clases de yoga</h4><p>Sientes que repites siempre lo mismo y que a tus clases les falta fondo. Aquí encuentras un método con personalidad propia y herramientas reales para acompañar a tu alumnado.</p></div>
+    <div class="profile reveal"><h4>Si ya eres profesor y das clases</h4><p>Sientes que repites siempre lo mismo y que a tus clases les falta fondo. Aquí encuentras un método con personalidad propia y herramientas reales para acompañar a tu alumnado.</p></div>
     <div class="profile reveal"><h4>Si quieres tu propia práctica</h4><p>Practicas yoga o artes marciales y quieres entender el porqué de cada movimiento. Te llevas un sistema completo, ordenado y fácil de seguir en tu día a día.</p></div>
     <div class="profile reveal"><h4>Si empiezas de cero</h4><p>Nunca has hecho yoga, o casi, pero quieres trabajarte: ganar fuerza física y mental, ordenar tus ideas y confiar más en ti. No necesitas ser flexible; necesitas ganas.</p></div>
   </div>
