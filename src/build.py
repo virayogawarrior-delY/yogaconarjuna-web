@@ -594,7 +594,6 @@ def viajes_india():
 # ---------------------------------------------------------------- STREET VIRAYOGA (página propia, desde la agenda)
 # Fotos: añade más en src/img/ y ponlas en STREET_FOTOS. Las de otras webs se cargan sin «referer».
 STREET_FOTOS = [
-    ('/img/street-testimonio.jpg', 'Una alumna cuenta su experiencia en la Plaça Reial'),
     ('/img/ag-street.jpg', 'Street Virayoga en la Plaça Reial de Barcelona'),
     ('https://content.timeout.es/medio/images/105/308/105308961.w1920.h1080.jpg', 'Street Virayoga en Barcelona (foto: Time Out)'),
     ('https://a1.elespanol.com/metropoliabierta/2018/10/26/vivir-en-barcelona/vivir_en_barcelona_348475164_10556554_1706x960.jpg', 'Street Virayoga en las calles de Barcelona (foto: Metrópoli Abierta)'),
