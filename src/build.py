@@ -655,8 +655,8 @@ def agenda():
 
 # ---------------------------------------------------------------- PRENSA
 PRESS = [
- ('p-elperiodico', 'Alberto López, «Arjuna»: Soy el canalla del yoga · El Periódico', 'Mi primera entrevista, en la contra de El Periódico, donde me bautizaron como «El canalla del yoga».', 'http://www.elperiodico.com/es/sociedad/20160312/albert-lopez-arjuna-soy-el-canalla-del-yoga-4971913', 'Leer entrevista'),
- ('p-tve', 'Entrevista para Ara i Aquí · TVE Catalunya', 'Entrañable entrevista sobre la transformación de un joven rebelde.', 'https://www.rtve.es/play/videos/ara-i-aqui/ara-aqui-els-joves-violents/4944539/', 'Ver vídeo'),
+ ('p-elperiodico', 'Alberto López, «Arjuna»: Soy el canalla del yoga · El Periódico', 'Mi primera entrevista, en la contra de El Periódico, donde me bautizaron como «El canalla del yoga».', 'https://www.elperiodico.com/es/sociedad/20160312/albert-lopez-arjuna-soy-el-canalla-del-yoga-4971913', 'Leer entrevista'),
+ ('p-tve', 'Entrevista para Ara i Aquí · TVE Catalunya', '«Els joves violents»: entrañable entrevista sobre la transformación de un joven rebelde gracias a las artes marciales.', 'https://www.youtube.com/watch?v=MqgX1Srt01c', 'Ver vídeo'),
  ('p-sergio-marina', 'Entrevista con Sergio Marina', 'Conversación consciente con mi amigo Sergio Marina.', 'https://www.youtube.com/watch?v=KkWZLAjGwyo&t=1766s', 'Ver vídeo'),
  ('p-sprinter', 'Entrevista para la plataforma de Sprinter', 'Conoce a Arjuna, yoga trainer de Sprinter Pass.', 'https://blogsprinter.es/conoce-a-arjuna-yoga-trainer-de-sprinter-pass/', 'Leer entrevista'),
  ('p-amosdecasa', 'Revista Amos de Casa', 'Dos páginas con posturas de Virayoga para tu día a día.', None, 'Artículo solo en papel'),
@@ -670,10 +670,14 @@ PRESS = [
  ('p-alaultima', '«A la última» · Clickradiotv', 'Bonita entrevista con Lydia Bermejo.', 'http://www.ivoox.com/21993695', 'Escuchar'),
  ('p-elle', 'Revista ELLE', 'ELLE Belleza recomienda el libro de Virayoga en su sección de actividades saludables y fitness.', None, 'Artículo solo en papel'),
  ('p-bcndivina', 'Revista Barcelona Divina', 'Artículo sobre el libro «Conoce el Virayoga por Arjuna, el canalla del yoga».', None, 'Artículo solo en papel'),
- ('p-mundopranico', 'Mundo Pránico y Caja de Pandora', '28 minutos de entrevista muy divertidos y canallas.', 'https://www.youtube.com/watch?v=H1C0JCe6dJo', 'Ver vídeo'),
+ ('p-mundopranico', 'Mundo Pránico y Caja de Pandora', 'Entrevista con Jonas Ferreira: un rato muy divertido y canalla hablando de Virayoga.', 'https://www.youtube.com/watch?v=jHeHDyzYyTE', 'Ver vídeo'),
  ('p-panorama', 'De taxista a profe de yoga · El Panorama', 'Reportaje para el periódico venezolano El Panorama.', 'http://www.panorama.com.ve/experienciapanorama/REPORTAJE--De-taxista-a-profe-de-yoga-20170616-0068.html', 'Leer'),
- ('p-estetic', 'Virayoga, ¿en qué se basa este nuevo método? · Estetic', 'La revista digital Estetic quiso saber más sobre el método.', 'http://consalud.es/estetic/tendencias/virayoga-en-que-se-basa-este-nuevo-metodo-37059', 'Leer'),
+ ('p-estetic', 'Virayoga, ¿en qué se basa este nuevo método? · Estetic', 'La revista digital Estetic quiso saber más sobre el método.', 'https://www.consalud.es/estetic/tendencias/virayoga-en-que-se-basa-este-nuevo-metodo.html', 'Leer'),
  ('p-larazon', 'La Razón', 'Nos recomendó como principal actividad de bienestar para el verano.', None, 'Artículo solo en papel'),
+ ('ag-street.jpg', 'Street Virayoga: el yoga llega a las calles de BCN · Metrópoli Abierta', 'Reportaje sobre Street Virayoga, el proyecto que sacó el yoga a las calles de Barcelona.', 'https://metropoliabierta.elespanol.com/vivir-en-barcelona/20181026/street-virayoga-el-yoga-llega-las-calles-de-bcn/348465243_0.html', 'Leer'),
+ ('vira-salto.jpg', 'Street Virayoga · Time Out Barcelona', 'Time Out recomendó Street Virayoga en su agenda de planes por Barcelona.', 'https://www.timeout.es/barcelona/que-hacer/street-virayoga_71915', 'Leer'),
+ ('arjuna-retrato.jpg', 'Alberto López, yoga y rehabilitación funcional · Kavurey', 'Perfil en el espacio psicológico Kavurey: mi trayectoria y el método Virayoga.', 'https://www.kavurey.com/alberto-lopez-kavurey/', 'Leer'),
+ ('https://i.ytimg.com/vi/DS46BqgSdC8/hqdefault.jpg', 'Un «gangster» yóguico · La Oveja Bruja', 'Entrevista en La Oveja Bruja: de las calles al yoga, sin filtros.', 'https://www.youtube.com/watch?v=DS46BqgSdC8', 'Ver vídeo'),
  ('p-vichy', 'Balneari Vichy Catalán · The 19th Room', 'Presentación del libro en el Balneario Vichy Catalán.', 'https://the19throom.com/2017/09/03/presentacion-editorial-virayoga-en-el-hotel-balneari-vichy-catalan/', 'Ver'),
 ]
 def prensa():
@@ -681,7 +685,8 @@ def prensa():
     for img, t, d, u, l in PRESS:
         contain = ' contain' if img in ('p-agentek', 'p-yoganimate', 'p-luces') else ''
         link = f'<a class="more" href="{u}" target="_blank" rel="noopener">{l} →</a>' if u else (f'<span class="paper">«{l}»</span>' if l else '')
-        items += f'<div class="press-item reveal"><div class="thumb{contain}" style="background-image:url(/img/{img}.jpg)" role="img" aria-label="{html.escape(t)}"></div><h3>{t}</h3><p>{d}</p>{link}</div>'
+        src = img if img.startswith('http') else f'/img/{img}' if '.' in img else f'/img/{img}.jpg'
+        items += f'<div class="press-item reveal"><div class="thumb{contain}" style="background-image:url({src})" role="img" aria-label="{html.escape(t)}"></div><h3>{t}</h3><p>{d}</p>{link}</div>'
     body = f'''
 <div class="wrap content">
   <div class="narrow" style="padding:0">
