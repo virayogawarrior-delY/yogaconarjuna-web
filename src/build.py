@@ -944,6 +944,18 @@ def blog():
     </div>
   </div>
 
+  <div class="yt-block reveal">
+    <div class="yt-text">
+      <span class="yt-logo">{ICON['music']}</span>
+      <h3>Bhakti, música medicina</h3>
+      <p>Mantras, guitarra y voz: el canal de música de Arjuna. Dale al play y deja que la cabeza se calle un rato.</p>
+      <p><a class="btn yt-btn" href="{YT_MUSIC}?sub_confirmation=1" target="_blank" rel="noopener">{ICON['yt']} Suscríbete</a> &nbsp; <a class="btn ghost" href="{YT_MUSIC}/videos" target="_blank" rel="noopener">Ver el canal</a></p>
+    </div>
+    <div class="video wide" data-yt-list="{'UU' + YT_MUSIC.rstrip('/').split('/')[-1][2:]}" data-title="Bhakti, música de Arjuna" style="background-image:url(/img/arjuna-templo.jpg)">
+      <button aria-label="Escuchar la música de Arjuna">{ICON['play']}</button><div class="cap">Escucha la música Bhakti</div>
+    </div>
+  </div>
+
   <div class="filters" role="tablist">{filters}</div>
   <div class="posts">{cards}</div>
 </section>

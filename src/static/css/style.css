@@ -461,3 +461,4 @@ a.post{color:inherit;text-decoration:none}
 .testimonials figcaption span{color:var(--muted)}
 @media(min-width:1025px){.testimonials:not(:has(.yt-t:nth-child(5))){justify-content:center}}
 @media(max-width:760px){.testimonials .t.yt-t{flex:0 0 200px}}
+.yt-block + .yt-block{margin-top:28px}
