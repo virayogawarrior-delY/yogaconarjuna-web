@@ -47,13 +47,31 @@
     v.addEventListener('click', function () {
       if (v.querySelector('iframe')) return;
       var f = document.createElement('iframe');
+      var api = '&enablejsapi=1&origin=' + encodeURIComponent(location.origin);
       f.src = v.dataset.ytList
-        ? 'https://www.youtube-nocookie.com/embed/videoseries?list=' + v.dataset.ytList + '&autoplay=1&rel=0'
-        : 'https://www.youtube-nocookie.com/embed/' + v.dataset.yt + '?autoplay=1&rel=0';
+        ? 'https://www.youtube-nocookie.com/embed/videoseries?list=' + v.dataset.ytList + '&autoplay=1&rel=0' + api
+        : 'https://www.youtube-nocookie.com/embed/' + v.dataset.yt + '?autoplay=1&rel=0' + api;
+      // Avisamos a la música de fondo de que empieza un vídeo, y escuchamos al reproductor de YouTube
+      // para saber cuándo se pausa o termina (así la canción vuelve a sonar).
+      document.dispatchEvent(new CustomEvent('yca:video', { detail: { state: 'play', el: f } }));
+      f.addEventListener('load', function () {
+        f.contentWindow.postMessage(JSON.stringify({ event: 'listening', id: f.title, channel: 'widget' }), '*');
+      });
       f.allow = 'autoplay; encrypted-media; picture-in-picture'; f.allowFullscreen = true;
       f.title = v.dataset.title || 'Vídeo';
       v.innerHTML = ''; v.appendChild(f);
     });
+  });
+
+  // Estado de los vídeos de YouTube (1 = reproduciendo, 2 = pausa, 0 = terminado)
+  window.addEventListener('message', function (e) {
+    try { if (!/(^|\.)youtube(-nocookie)?\.com$/.test(new URL(e.origin).hostname)) return; } catch (x) { return; }
+    var d; try { d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch (x) { return; }
+    var st = d && (d.event === 'onStateChange' ? d.info : (d.info && d.info.playerState));
+    if (st === undefined || st === null) return;
+    var f = [].find.call(document.querySelectorAll('.video iframe'), function (x) { return x.contentWindow === e.source; });
+    if (st === 1) document.dispatchEvent(new CustomEvent('yca:video', { detail: { state: 'play', el: f } }));
+    else if (st === 2 || st === 0) document.dispatchEvent(new CustomEvent('yca:video', { detail: { state: 'stop', el: f } }));
   });
 
   // Testimonios de Instagram: se cargan cuando la sección entra en pantalla
@@ -267,6 +285,20 @@
         GESTURES.forEach(function (ev) { document.addEventListener(ev, onGesture, true); });
       });
     }
-    window.addEventListener('pagehide', function () { if (au) save(!au.paused); });
+    // Mientras suena un vídeo, la canción se calla; cuando el vídeo se pausa o termina, vuelve
+    var playingVideos = [], pausedForVideo = false;
+    document.addEventListener('yca:video', function (e) {
+      var el = e.detail.el, i = playingVideos.indexOf(el);
+      if (e.detail.state === 'play') {
+        if (i < 0) playingVideos.push(el);
+        if (au && !au.paused) { pausedForVideo = true; au.pause(); }
+        else if (!au || au.paused) { if (sw.classList.contains('resume') && !stopped) pausedForVideo = true; }
+        unwait();
+      } else {
+        if (i >= 0) playingVideos.splice(i, 1);
+        if (!playingVideos.length && pausedForVideo && !stopped) { pausedForVideo = false; audio().play().catch(function () {}); }
+      }
+    });
+    window.addEventListener('pagehide', function () { if (au) save(pausedForVideo || !au.paused); });
   }
 })();
