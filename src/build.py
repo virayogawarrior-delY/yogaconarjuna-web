@@ -71,15 +71,15 @@ TESTIMONIOS = [
     ('2z3X9ca_QSw', 'Caterine', 'formacion', '«Me ha aportado algo diferente: seguridad en mí misma.»'),
     ('4icnmu1MR-o', 'Gema', 'formacion', '«Virayoga me ha enfocado a despertar mi poder interior, mi seguridad, mi confianza.»'),
     ('-UmMe4KWMbc', 'Astrid', 'vida', 'Llegó hundida y hoy enseña Virayoga: su historia.'),
-    ('TX3XsXXL66I', 'Alumna de Virayoga', 'vida', '«Me ha dado herramientas para ser más fuerte y afrontar la vida.»'),
-    ('x0fsqrGqNis', 'Profesora de yoga', 'vida', '«Después de la quimioterapia, me ha ayudado a sentirme más fuerte.»'),
+    ('TX3XsXXL66I', '', 'vida', '«Me ha dado herramientas para ser más fuerte y afrontar la vida.»'),
+    ('x0fsqrGqNis', '', 'vida', '«Después de la quimioterapia, me ha ayudado a sentirme más fuerte.»'),
     ('FZ3Z8ljJ4Yw', 'Laya', 'vida', 'Todo lo que le aporta Virayoga.'),
-    ('ykG72D7uJRA', 'Alumna de taller', 'taller', '«Ha sido todo un regalo. Superrecomendable.»'),
-    ('DKPZAiohsL8', 'Alumna del taller «Libérate»', 'taller', '«Me ha sorprendido ese trasfondo tan profundo de crecimiento personal.»'),
-    ('TRIcS73HJA8', 'Alumno de taller', 'taller', '«Mi primer contacto con el yoga: he conectado conmigo mismo.»'),
-    ('2ZPxGgELdgU', 'Alumno de taller', 'taller', '«Me voy muy contento y lleno de este taller.»'),
-    ('SBTLdEzidsc', 'Alumna de taller', 'taller', '«Vine con miedos… y no solo pude, me ha llegado al alma.»'),
-    ('QAmn2FAw9Jc', 'Alumna de las clases', 'taller', '«Una práctica que me da energía, muy dinámica y divertida.»'),
+    ('ykG72D7uJRA', '', 'taller', '«Ha sido todo un regalo. Superrecomendable.»'),
+    ('DKPZAiohsL8', '', 'taller', '«Me ha sorprendido ese trasfondo tan profundo de crecimiento personal.»'),
+    ('TRIcS73HJA8', '', 'taller', '«Mi primer contacto con el yoga: he conectado conmigo mismo.»'),
+    ('2ZPxGgELdgU', '', 'taller', '«Me voy muy contento y lleno de este taller.»'),
+    ('SBTLdEzidsc', '', 'taller', '«Vine con miedos… y no solo pude, me ha llegado al alma.»'),
+    ('QAmn2FAw9Jc', '', 'taller', '«Una práctica que me da energía, muy dinámica y divertida.»'),
 ]
 TESTIMONIOS_LIST = 'https://www.youtube.com/playlist?list=PLKHs8bw52nGk'
 
@@ -111,8 +111,8 @@ def testimonials_html(title='Lo que dicen de Virayoga', kinds=('vida', 'formacio
         items = [t for k in kinds for t in TESTIMONIOS if t[2] == k]
     cards = ''.join(f'''
       <figure class="t yt-t reveal">
-        <div class="video short" data-yt="{vid}" data-title="Testimonio de {html.escape(name)}" style="background-image:url(https://i.ytimg.com/vi/{vid}/hqdefault.jpg)"><button aria-label="Ver el testimonio de {html.escape(name)}">{ICON['play']}</button></div>
-        <figcaption><strong>{html.escape(name)}</strong><span>{html.escape(q)}</span></figcaption>
+        <div class="video short" data-yt="{vid}" data-title="Testimonio{(' de ' + html.escape(name)) if name else ''}" style="background-image:url(https://i.ytimg.com/vi/{vid}/hqdefault.jpg)"><button aria-label="Ver testimonio{(' de ' + html.escape(name)) if name else ''}">{ICON['play']}</button></div>
+        <figcaption>{('<strong>' + html.escape(name) + '</strong>') if name else ''}<span>{html.escape(q)}</span></figcaption>
       </figure>''' for vid, name, _, q in items)
     return f'''
 <section class="section{' soft' if soft else ''}" id="testimonios">
