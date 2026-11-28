@@ -448,6 +448,9 @@ def virayoga():
   <h2>El yoga del guerrero</h2>
   <p><em>Vira</em> significa guerrero. Y no va de pelear con nadie: va de despertar tu poder interno, ese que tiene mucho que ver con la actitud con la que te enfrentas a la vida. Si lo tuviéramos que resumir en cuatro palabras serían <strong>empoderamiento, presencia, lateralidad y autoconfianza</strong>.</p>
   <p>En todo momento estás haciendo yoga. Las técnicas marciales van escondidas en el movimiento entre una asana y la siguiente, y solo las descubres cuando desmontamos la postura. Por eso trabajas el cuerpo más a fondo, despiertas tu sistema motriz y, de paso, ganas seguridad en ti. Es difícil de explicar y muy fácil de sentir: lo mejor es que lo pruebes.</p>
+  <div class="video reveal" data-yt="lozwmWKLfSU" data-title="Una práctica de Virayoga" style="background-image:url(https://i.ytimg.com/vi/lozwmWKLfSU/hqdefault.jpg);margin:28px auto">
+    <button aria-label="Ver una práctica de Virayoga">{ICON['play']}</button><div class="cap">Así es una práctica de Virayoga</div>
+  </div>
 
   <h2>¿Para quién es?</h2>
   <div class="profiles">
@@ -910,7 +913,6 @@ YT_CHANNEL_ID = 'UCvABr1XkDwI3JPWX3LcYajw'   # la lista de subidas del canal es 
 #   ('directo',  'ID_YOUTUBE', 'Título', 'Descripción corta')   → Un Té con Arjuna destacado
 #   ('articulo', 'imagen.jpg', 'Título', 'Descripción corta', '/blog/slug/')   → Artículos
 POSTS = [
-    ('practica', 'lozwmWKLfSU', 'Una práctica de Virayoga', 'Yoga y artes marciales en movimiento: así es una sesión de Virayoga.'),
 ]
 BLOG_CATS = [('practica', 'Clase o práctica'), ('directo', 'Té con Arjuna'), ('articulo', 'Artículo')]
 # Enlace a los «Té con Arjuna» en YouTube. Si hay una lista de reproducción, pon aquí su enlace.
