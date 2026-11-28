@@ -594,6 +594,7 @@ def viajes_india():
 # ---------------------------------------------------------------- STREET VIRAYOGA (página propia, desde la agenda)
 # Fotos: añade más en src/img/ y ponlas en STREET_FOTOS. Las de otras webs se cargan sin «referer».
 STREET_FOTOS = [
+    ('/img/street-testimonio.jpg', 'Una alumna cuenta su experiencia en la Plaça Reial'),
     ('/img/ag-street.jpg', 'Street Virayoga en la Plaça Reial de Barcelona'),
     ('https://content.timeout.es/medio/images/105/308/105308961.w1920.h1080.jpg', 'Street Virayoga en Barcelona (foto: Time Out)'),
     ('https://a1.elespanol.com/metropoliabierta/2018/10/26/vivir-en-barcelona/vivir_en_barcelona_348475164_10556554_1706x960.jpg', 'Street Virayoga en las calles de Barcelona (foto: Metrópoli Abierta)'),
@@ -615,6 +616,12 @@ def street_virayoga():
   <p>Nació con una idea clara: sacar el yoga de las salas y llevarlo a donde está la vida. Vecinos, turistas, curiosos que pasaban por allí y alumnos de siempre, todos en la misma plaza, moviéndose a la vez. Sin postureo y sin necesidad de ser flexible.</p>
   <p>Practicamos Virayoga: Hatha Yoga y artes marciales en los 360º de la esterilla. Te mueves, sudas un poco, te ríes bastante y te vas a casa con la cabeza más limpia y la sensación de haber compartido algo bonito.</p>
   <div class="gallery reveal">{fotos}</div>
+
+  <h2>Desde la plaza</h2>
+  <p>«Me siento una guerrera»: así lo cuenta una alumna, en plena Plaça Reial, al terminar la práctica.</p>
+  <video class="own-video reveal" controls playsinline preload="none" poster="/video/DX6EL_mMEZm.jpg" style="display:block;width:100%;max-width:320px;aspect-ratio:9/16;margin:24px auto;border-radius:6px;background:#000;box-shadow:0 20px 50px rgba(0,0,0,.25)">
+    <source src="/video/DX6EL_mMEZm.mp4" type="video/mp4">
+  </video>
 
   <h2>Cuándo y dónde</h2>
   <ul>

@@ -73,6 +73,11 @@
     if (st === 1) document.dispatchEvent(new CustomEvent('yca:video', { detail: { state: 'play', el: f } }));
     else if (st === 2 || st === 0) document.dispatchEvent(new CustomEvent('yca:video', { detail: { state: 'stop', el: f } }));
   });
+  // Vídeos propios de la web (<video>): también callan la canción mientras suenan
+  document.querySelectorAll('video.own-video').forEach(function (v) {
+    v.addEventListener('play', function () { document.dispatchEvent(new CustomEvent('yca:video', { detail: { state: 'play', el: v } })); });
+    ['pause', 'ended'].forEach(function (ev) { v.addEventListener(ev, function () { document.dispatchEvent(new CustomEvent('yca:video', { detail: { state: 'stop', el: v } })); }); });
+  });
 
   // Testimonios de Instagram: se cargan cuando la sección entra en pantalla
   var tw = document.querySelector('[data-instagram]');
