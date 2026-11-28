@@ -215,9 +215,9 @@
         } else { top = e.t1; sub = e.fi ? '' : e.t2; }
         d.appendChild(document.createTextNode(top));
         if (sub) { d.appendChild(document.createElement('br')); var sm = el('small', '', sub); sm.style.fontSize = '.6em'; d.appendChild(sm); }
+        if (e.preu) d.appendChild(el('span', 'badge price', e.preu));   // precio justo debajo de la fecha
         var mid = el('div', e.foto ? 'ev-body has-img' : 'ev-body');
         if (e.foto) { var im = el('img', 'ev-img'); im.src = e.foto; im.alt = e.act; im.loading = 'lazy'; mid.appendChild(im); }
-        if (e.preu) mid.appendChild(el('span', 'badge', e.preu));
         mid.appendChild(el('h3', '', e.act));
         if (e.lloc) mid.appendChild(el('p', 'ev-place', e.lloc));
         if (e.desc) mid.appendChild(el('p', '', e.desc));

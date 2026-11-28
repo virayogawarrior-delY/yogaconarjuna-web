@@ -584,8 +584,8 @@ def agenda():
   <h2 class="cat">Próximos eventos</h2>
   <div class="events" data-sheet="{html.escape(AGENDA_CSV)}">
     <div class="event reveal">
-      <div class="date">12 dic<br><small style="font-size:.6em">2026 · 11 h</small></div>
-      <div><span class="badge">Gratuito</span><h3>Street Virayoga en Plaça Reial (Barcelona)</h3><p>Práctica de Virayoga al aire libre. ¡Solo trae tu esterilla!</p></div>
+      <div class="date">12 dic<br><small style="font-size:.6em">2026 · 11 h</small><span class="badge price">Gratuito</span></div>
+      <div><h3>Street Virayoga en Plaça Reial (Barcelona)</h3><p>Práctica de Virayoga al aire libre. ¡Solo trae tu esterilla!</p></div>
       <a class="btn" href="mailto:{EMAIL}?subject=Street%20Virayoga%2012%20diciembre">Apuntarme</a>
     </div>
     <div class="event reveal">
@@ -935,7 +935,7 @@ def blog():
   <div class="yt-block reveal">
     <div class="yt-text">
       <span class="yt-logo">{ICON['yt']}</span>
-      <h3>Mi canal de YouTube</h3>
+      <h3>Canal Yoga con Arjuna</h3>
       <p>Aquí tienes los últimos vídeos del canal. Suscríbete para no perderte ninguna práctica nueva.</p>
       <p><a class="btn yt-btn" href="{YT_CHANNEL}?sub_confirmation=1" target="_blank" rel="noopener">{ICON['yt']} Suscríbete</a> &nbsp; <a class="btn ghost" href="{YT_CHANNEL}/videos" target="_blank" rel="noopener">Ver todos los vídeos</a></p>
     </div>
