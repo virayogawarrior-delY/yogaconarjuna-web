@@ -445,6 +445,10 @@ def virayoga():
   <p>La formación es una sola y completa: la <strong>formación total de Virayoga</strong>. Te da una base técnica y psicológica sólida para dominar tu práctica, crear tus propias clases y llevar la actitud Vira a tu día a día.</p>
   <div class="gallery reveal"><img src="/img/vira-salto.jpg" alt="Patada marcial de Virayoga junto al mar" loading="lazy"><img src="/img/vira-equilibrio.jpg" alt="Postura de equilibrio de Virayoga" loading="lazy"><img src="/img/india-arcos.jpg" alt="Postura de Virayoga en un palacio de India" loading="lazy"></div>
 
+  <h2>El yoga del guerrero</h2>
+  <p><em>Vira</em> significa guerrero. Y no va de pelear con nadie: va de despertar tu poder interno, ese que tiene mucho que ver con la actitud con la que te enfrentas a la vida. Si lo tuviéramos que resumir en cuatro palabras serían <strong>empoderamiento, presencia, lateralidad y autoconfianza</strong>.</p>
+  <p>En todo momento estás haciendo yoga. Las técnicas marciales van escondidas en el movimiento entre una asana y la siguiente, y solo las descubres cuando desmontamos la postura. Por eso trabajas el cuerpo más a fondo, despiertas tu sistema motriz y, de paso, ganas seguridad en ti. Es difícil de explicar y muy fácil de sentir: lo mejor es que lo pruebes.</p>
+
   <h2>¿Para quién es?</h2>
   <div class="profiles">
     <div class="profile reveal"><h4>Si ya das clases de yoga</h4><p>Sientes que repites siempre lo mismo y que a tus clases les falta fondo. Aquí encuentras un método con personalidad propia y herramientas reales para acompañar a tu alumnado.</p></div>
@@ -458,6 +462,15 @@ def virayoga():
 </article>
 <div class="wrap">{camino_html('Las 9 sesiones del Virayoga', 'Cada sesión es una etapa del camino del guerrero, con su sankalpa.')}</div>
 <article class="narrow content">
+  <h2>La psicología del Virayoga</h2>
+  <p>Las 9 sesiones son también un camino de autoconocimiento. En cada etapa te encuentras con tus dificultades, tus miedos y tus fortalezas, y aprendes a mirarlos de frente. Al terminar la formación te conoces mejor, te valoras de otra manera y te llevas una forma distinta de plantarte ante lo que te pasa. Eso es la actitud Vira.</p>
+  <h2>Qué aprenderás</h2>
+  <ul>
+    <li>Las asanas de Hatha y los movimientos marciales que te llevan a ellas, para construir una práctica fluida y dinámica.</li>
+    <li>Ajustes, adaptaciones, beneficios y contraindicaciones de cada asana y movimiento, para adaptar la clase a cualquier nivel.</li>
+    <li>Los 9 pranayamas, uno por sesión, y diferentes meditaciones, técnicas de relajación y mantras.</li>
+    <li>Los movimientos avanzados de cada sesión.</li>
+  </ul>
   <h2>Lo que te llevas</h2>
   <ul>
     <li><strong>Una estructura técnica muy clara.</strong> Cada sesión sigue un orden pensado (llaves, preparación vertebral, cardio, encadenamientos, fuerza, equilibrio, torsiones, invertidas…). Combinando sus partes tienes un abanico enorme de clases diferentes.</li>
@@ -467,6 +480,7 @@ def virayoga():
   </ul>
   <h2>Cómo es</h2>
   <p>Formación online, por bloques y a tu ritmo, con autoevaluaciones y acompañamiento cercano de Arjuna y del equipo de Virayoga. Nos adaptamos a ti y a tu momento: mirar hacia dentro a veces remueve, y aquí tienes una mano amiga.</p>
+  <p>Incluye <strong>manual didáctico</strong>, <strong>tutorías</strong> de acompañamiento y mejora y <strong>descuento en retiros y viajes</strong>.</p>
   <div class="buy-box reveal">
     <h3>¿Damos el paso?</h3>
     <p>Escríbeme y te cuento fechas, precio y cómo empezar. Sin presiones: primero resolvemos tus dudas.</p>
