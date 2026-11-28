@@ -362,6 +362,7 @@ def sobre():
 
   <h2 id="bhakti">Bhakti, música medicina</h2>
   <p>El Bhakti es el yoga de la devoción: cantar mantras hasta que la cabeza se calla y el corazón toma el mando. Lo vivo con la guitarra y la voz, en conciertos, en clase y en cada viaje. Si te apetece tenerlo en tu evento, también puedes <a href="/servicios-de-virayoga/">contratarme</a>.</p>
+  <div class="gallery four reveal"><img src="/img/bhakti-1.jpg" alt="Arjuna con la guitarra y la camiseta de Virayoga" loading="lazy"><img src="/img/bhakti-2.jpg" alt="Arjuna cantando con micrófono en un concierto al aire libre" loading="lazy"><img src="/img/bhakti-3.jpg" alt="Arjuna tocando la guitarra en un patio blanco" loading="lazy"><img src="/img/bhakti-4.jpg" alt="Arjuna tocando la guitarra entre palmeras" loading="lazy"></div>
   {song_block()}
 
   <h2 id="libro">Mi libro</h2>
@@ -575,7 +576,7 @@ def viajes_india():
   <p class="lead">Una vez al año me llevo a un grupo a India. No a la de las postales, sino a la India profunda: la que te remueve por dentro y te cambia la forma de mirar.</p>
   <p>Llevo más de 15 años guiando grupos por este país. Visitamos lo imprescindible, pero sobre todo vamos donde está la vida de verdad: su gente, sus templos, su comida y esa capacidad de darlo todo que te deja sin palabras.</p>
   <p>Yo voy a tu lado para cuidarte y enseñarte lo que he aprendido allí. Lo demás lo hace India.</p>
-  <div class="gallery reveal"><img src="/img/india-jaipur.jpg" alt="Arjuna en Jaipur" loading="lazy"><img src="/img/india-arcos-2.jpg" alt="Virayoga en un palacio de India" loading="lazy"><img src="/img/india-arcos-3.jpg" alt="Postura marcial en India" loading="lazy"><img src="/img/india-jaipur-2.jpg" alt="Grupo de viaje en Jaipur" loading="lazy"><img src="/img/arjuna-templo.jpg" alt="Arjuna frente a un templo" loading="lazy"><img src="/img/india-arcos.jpg" alt="Arcos de un palacio en India" loading="lazy"></div>
+  <div class="gallery reveal"><img src="/img/india-v1.jpg" alt="Ritual en los ghats del Ganges" loading="lazy"><img src="/img/india-v2.jpg" alt="Aarti, la ceremonia del fuego junto al río" loading="lazy"><img src="/img/india-v3.jpg" alt="Práctica de grupo en el fuerte de Amber" loading="lazy"><img src="/img/india-v4.jpg" alt="Arjuna en la cornisa de un palacio" loading="lazy"><img src="/img/india-v5.jpg" alt="Atardecer en las azoteas de Varanasi" loading="lazy"><img src="/img/india-v6.jpg" alt="Arjuna con un sadhu" loading="lazy"><img src="/img/india-v7.jpg" alt="Arjuna con un sacerdote junto al río" loading="lazy"><img src="/img/india-v8.jpg" alt="Arjuna con niños en Rishikesh" loading="lazy"><img src="/img/india-v9.jpg" alt="Niños sonriendo en India" loading="lazy"><img src="/img/india-v10.jpg" alt="Arjuna enseñando en una escuela" loading="lazy"><img src="/img/india-v13.jpg" alt="El grupo de viaje en el Taj Mahal" loading="lazy"><img src="/img/india-v14.jpg" alt="Frente al Hawa Mahal de Jaipur" loading="lazy"><img src="/img/india-v15.jpg" alt="El grupo de viaje en un templo tallado" loading="lazy"><img src="/img/india-jaipur.jpg" alt="Arjuna en Jaipur" loading="lazy"><img src="/img/india-arcos-2.jpg" alt="Virayoga en un palacio de India" loading="lazy"><img src="/img/india-arcos-3.jpg" alt="Postura marcial en India" loading="lazy"><img src="/img/india-jaipur-2.jpg" alt="Grupo de viaje en Jaipur" loading="lazy"><img src="/img/arjuna-templo.jpg" alt="Arjuna frente a un templo" loading="lazy"></div>
   <div class="buy-box reveal">
     <h3>Próximo viaje</h3>
     <p>Fechas por concretar. Consulta la <a href="/agenda/">agenda</a> o escríbeme y te aviso en cuanto estén.</p>
@@ -594,6 +595,9 @@ def viajes_india():
 # ---------------------------------------------------------------- STREET VIRAYOGA (página propia, desde la agenda)
 # Fotos: añade más en src/img/ y ponlas en STREET_FOTOS. Las de otras webs se cargan sin «referer».
 STREET_FOTOS = [
+    ('/img/street-1.jpg', 'Invertidas junto a la fuente de la Plaça Reial'),
+    ('/img/street-2.jpg', 'Arjuna ajustando una postura en la calle'),
+    ('/img/street-3.jpg', 'Clase de Street Virayoga sobre los adoquines'),
     ('/img/ag-street.jpg', 'Street Virayoga en la Plaça Reial de Barcelona'),
     ('https://content.timeout.es/medio/images/105/308/105308961.w1920.h1080.jpg', 'Street Virayoga en Barcelona (foto: Time Out)'),
     ('https://a1.elespanol.com/metropoliabierta/2018/10/26/vivir-en-barcelona/vivir_en_barcelona_348475164_10556554_1706x960.jpg', 'Street Virayoga en las calles de Barcelona (foto: Metrópoli Abierta)'),
