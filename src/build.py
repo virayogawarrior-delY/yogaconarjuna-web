@@ -605,16 +605,16 @@ def agenda():
     </div>
   </div>
 
-  <h2 class="cat">Formación y viajes</h2>
-  <div class="ag-cards">
-    {card('vira-salto.jpg', 'Formación de Virayoga', '<p>La formación total de Virayoga: yoga, artes marciales y psicología en 9 sesiones, online y con acompañamiento cercano.</p><p><a class="btn" href="/virayoga/">Conoce la formación</a></p>')}
-    {card('india-jaipur-2.jpg', 'Viajes a India', '<p>Una vez al año, unos 15 días por la India profunda. No es un retiro: es un viaje que te cambia la forma de mirar.</p><p><a class="btn" href="/viajes-india/">Ver el viaje</a></p>')}
-  </div>
-
   <h2 class="cat">Eventos</h2>
   <div class="ag-cards">
     {card('ag-street.jpg', 'Street Virayoga', '<p>Práctica de Virayoga gratuita en la Plaça Reial de Barcelona, el primer sábado de cada mes. Al aire libre, con gente de todas partes y buen rollo. ¡Solo trae tu esterilla!</p>')}
     {card('ag-tenerife.jpg', 'Talleres y masterclasses', '<p>Talleres por toda España (Tenerife, Murcia…) y masterclasses en escuelas. Mira las fechas arriba o lleva el Virayoga a tu centro.</p><p><a class="btn ghost" href="/servicios-de-virayoga/">Contrátame</a></p>')}
+  </div>
+
+  <h2 class="cat">Formación y viajes</h2>
+  <div class="ag-cards">
+    {card('vira-salto.jpg', 'Formación de Virayoga', '<p>La formación total de Virayoga: yoga, artes marciales y psicología en 9 sesiones, online y con acompañamiento cercano.</p><p><a class="btn" href="/virayoga/">Conoce la formación</a></p>')}
+    {card('india-jaipur-2.jpg', 'Viajes a India', '<p>Una vez al año, unos 15 días por la India profunda. No es un retiro: es un viaje que te cambia la forma de mirar.</p><p><a class="btn" href="/viajes-india/">Ver el viaje</a></p>')}
   </div>
 
   <h2 class="cat">Clases</h2>
