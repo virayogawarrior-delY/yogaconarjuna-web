@@ -104,6 +104,9 @@ li{margin-bottom:.35em}
 .video.wide{aspect-ratio:16/9;max-width:none}
 .video button{position:absolute;inset:0;margin:auto;width:76px;height:76px;border-radius:50%;border:0;background:var(--red);color:#fff;cursor:pointer;display:grid;place-items:center;transition:transform .2s}
 .video:hover button{transform:scale(1.08)}
+.video.link{display:block}
+.video.link .play{position:absolute;inset:0;margin:auto;width:76px;height:76px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;transition:transform .2s}
+.video.link:hover .play{transform:scale(1.08)}
 .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .video .cap{position:absolute;left:0;right:0;bottom:0;padding:14px;font-size:.85rem;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;text-align:center}
 
@@ -185,6 +188,7 @@ label{display:block;font-size:.9rem;margin-bottom:6px;color:var(--ink)}
 .press-item{display:flex;flex-direction:column}
 .press-item .thumb{aspect-ratio:4/3;background:#eee center/cover;margin-bottom:18px;transition:transform .3s;border:1px solid var(--line)}
 .press-item:hover .thumb{transform:translateY(-4px)}
+.press-item .thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .press-item .thumb.contain{background-size:contain;background-repeat:no-repeat;background-color:#fff}
 .press-item h3{font-size:1.15rem;margin:0 0 .4em;font-weight:500}
 .press-item p{font-size:.98rem;line-height:1.65;color:var(--muted);margin-bottom:.6em}
@@ -375,3 +379,91 @@ a.post{color:inherit;text-decoration:none}
 .ev-body.has-img{min-height:96px;padding-left:116px;position:relative}
 .ev-img{position:absolute;left:0;top:0;width:96px;height:96px;object-fit:cover;border-radius:6px}
 .event .ev-place{font-weight:600;color:var(--ink)}
+
+/* ---- Novedades reunión 21/11/2026 ---- */
+.kicker{display:block;font-size:.72rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);font-weight:600;margin-bottom:.4em}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+
+/* Tres ramas: Virayoga, viajes y Bhakti */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:12px}
+.pillar{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);color:var(--text);transition:transform .25s,box-shadow .25s}
+.pillar:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(0,0,0,.08);color:var(--text)}
+.pillar .img{aspect-ratio:4/3;background:#ddd center/cover}
+.pillar .body{padding:26px 26px 30px}
+.pillar h3{font-family:var(--script);font-size:1.9rem;margin-bottom:.3em}
+.pillar p{font-size:1rem;line-height:1.7;color:var(--muted)}
+.pillar .more{color:var(--red);font-weight:500;font-size:.9rem;letter-spacing:1px;text-transform:uppercase}
+
+/* Banda «Contrátame» */
+.hire{background:var(--ink);color:#fff;padding:72px 0}
+.hire .wrap{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center}
+.hire h2{color:#fff;font-size:1.9rem}
+.hire p{color:rgba(255,255,255,.85);margin:0}
+.hire .kicker{color:#f19a94}
+
+/* Cajas de compra / llamada a la acción */
+.buy-box{background:var(--soft);padding:36px;margin:2.4em 0;text-align:center}
+.buy-box h3{margin-top:0}
+.price-big{font-size:2.4rem;color:var(--ink);font-weight:500;margin:.1em 0 .4em}
+.mini-book{display:grid;grid-template-columns:160px 1fr;gap:28px;align-items:center;margin:1.4em 0 2.4em}
+.mini-book img{box-shadow:0 12px 30px rgba(0,0,0,.15)}
+
+/* Perfiles de la formación */
+.profiles{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:1.4em 0 2em}
+.profile{background:var(--soft);padding:24px}
+.profile h4{margin-top:0;color:var(--red)}
+.profile p{font-size:1rem;line-height:1.7;margin:0}
+
+/* Preguntas frecuentes */
+.faq-item{border-bottom:1px solid var(--line);padding:14px 0}
+.faq-item summary{cursor:pointer;font-weight:500;color:var(--ink);list-style:none;position:relative;padding-right:30px}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:"+";position:absolute;right:4px;top:-2px;font-size:1.4rem;color:var(--red)}
+.faq-item[open] summary::after{content:"–"}
+.faq-item p{margin:.8em 0 0}
+
+/* Reproductor de música (abajo a la izquierda, nunca arranca solo) */
+.song{position:fixed;left:20px;bottom:22px;z-index:45}
+.song-btn{display:flex;align-items:center;gap:10px;height:48px;padding:0 18px 0 14px;border-radius:30px;border:0;background:rgba(255,255,255,.95);color:var(--ink);box-shadow:0 8px 24px rgba(0,0,0,.18);font:500 .9rem var(--sans);cursor:pointer;transition:transform .2s}
+.song-btn:hover{transform:translateY(-3px)}
+.song-btn svg{width:22px;height:22px;fill:var(--red)}
+.song .i-pause,.song.on .i-play{display:none}
+.song.on .i-pause{display:inline}
+.song .eq{display:none;align-items:flex-end;gap:2px;height:14px}
+.song.on .eq{display:flex}
+.song .eq i{width:3px;background:var(--red);animation:eq 1s infinite ease-in-out}
+.song .eq i:nth-child(2){animation-delay:.2s}.song .eq i:nth-child(3){animation-delay:.4s}
+@keyframes eq{0%,100%{height:4px}50%{height:14px}}
+.song.resume .song-btn{outline:2px solid var(--red)}
+.song.resume .txt::before{content:"▶ "}
+.song-card{display:flex;gap:24px;align-items:center;background:var(--soft);padding:28px;margin:1.4em 0 2.4em}
+.song-card h3{margin:0 0 .3em}
+.song-card p{margin:0 0 .6em;font-size:1rem}
+.song-big{flex:0 0 76px;width:76px;height:76px;border-radius:50%;border:0;background:var(--red);cursor:pointer;display:grid;place-items:center;transition:transform .2s}
+.song-big svg{width:34px;height:34px;fill:#fff}
+.song-big:hover{transform:scale(1.06)}
+.song-big.on{background:var(--ink)}
+
+@media (max-width:1024px){.pillars{grid-template-columns:1fr 1fr}.profiles{grid-template-columns:1fr}}
+@media (max-width:760px){
+  .pillars{grid-template-columns:1fr}
+  .hire .wrap{grid-template-columns:1fr;gap:24px}
+  .mini-book{grid-template-columns:110px 1fr;gap:18px}
+  .song{left:14px;bottom:18px}
+  .song-btn{width:48px;padding:0;justify-content:center}
+  .song-btn .txt,.song.on .eq{display:none}
+  .song-card{flex-direction:column;text-align:center}
+}
+@media print{.song{display:none}}
+
+/* Testimonios de YouTube (vídeos verticales) */
+.testimonials .t.yt-t{flex:0 0 230px;margin:0}
+.testimonials .video.short{max-width:none;box-shadow:0 12px 30px rgba(0,0,0,.18);background-size:auto 133%;background-position:center}
+.testimonials .video.short button{width:60px;height:60px}
+.testimonials figcaption{padding:12px 2px 0;font-size:.95rem;line-height:1.5}
+.testimonials figcaption strong{display:block;color:var(--ink)}
+.testimonials figcaption span{color:var(--muted)}
+@media(min-width:1025px){.testimonials:not(:has(.yt-t:nth-child(5))){justify-content:center}}
+@media(max-width:760px){.testimonials .t.yt-t{flex:0 0 200px}}
+.yt-block + .yt-block{margin-top:28px}
+.event .date .badge.price{display:block;background:none;color:var(--ink);padding:0;border-radius:0;margin:6px 0 0;font-family:var(--sans);font-size:.85rem;font-weight:600;letter-spacing:1px;line-height:1.4}

@@ -47,13 +47,36 @@
     v.addEventListener('click', function () {
       if (v.querySelector('iframe')) return;
       var f = document.createElement('iframe');
+      var api = '&enablejsapi=1&origin=' + encodeURIComponent(location.origin);
       f.src = v.dataset.ytList
-        ? 'https://www.youtube-nocookie.com/embed/videoseries?list=' + v.dataset.ytList + '&autoplay=1&rel=0'
-        : 'https://www.youtube-nocookie.com/embed/' + v.dataset.yt + '?autoplay=1&rel=0';
+        ? 'https://www.youtube-nocookie.com/embed/videoseries?list=' + v.dataset.ytList + '&autoplay=1&rel=0' + api
+        : 'https://www.youtube-nocookie.com/embed/' + v.dataset.yt + '?autoplay=1&rel=0' + api;
+      // Avisamos a la música de fondo de que empieza un vídeo, y escuchamos al reproductor de YouTube
+      // para saber cuándo se pausa o termina (así la canción vuelve a sonar).
+      document.dispatchEvent(new CustomEvent('yca:video', { detail: { state: 'play', el: f } }));
+      f.addEventListener('load', function () {
+        f.contentWindow.postMessage(JSON.stringify({ event: 'listening', id: f.title, channel: 'widget' }), '*');
+      });
       f.allow = 'autoplay; encrypted-media; picture-in-picture'; f.allowFullscreen = true;
       f.title = v.dataset.title || 'Vídeo';
       v.innerHTML = ''; v.appendChild(f);
     });
+  });
+
+  // Estado de los vídeos de YouTube (1 = reproduciendo, 2 = pausa, 0 = terminado)
+  window.addEventListener('message', function (e) {
+    try { if (!/(^|\.)youtube(-nocookie)?\.com$/.test(new URL(e.origin).hostname)) return; } catch (x) { return; }
+    var d; try { d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch (x) { return; }
+    var st = d && (d.event === 'onStateChange' ? d.info : (d.info && d.info.playerState));
+    if (st === undefined || st === null) return;
+    var f = [].find.call(document.querySelectorAll('.video iframe'), function (x) { return x.contentWindow === e.source; });
+    if (st === 1) document.dispatchEvent(new CustomEvent('yca:video', { detail: { state: 'play', el: f } }));
+    else if (st === 2 || st === 0) document.dispatchEvent(new CustomEvent('yca:video', { detail: { state: 'stop', el: f } }));
+  });
+  // Vídeos propios de la web (<video>): también callan la canción mientras suenan
+  document.querySelectorAll('video.own-video').forEach(function (v) {
+    v.addEventListener('play', function () { document.dispatchEvent(new CustomEvent('yca:video', { detail: { state: 'play', el: v } })); });
+    ['pause', 'ended'].forEach(function (ev) { v.addEventListener(ev, function () { document.dispatchEvent(new CustomEvent('yca:video', { detail: { state: 'stop', el: v } })); }); });
   });
 
   // Testimonios de Instagram: se cargan cuando la sección entra en pantalla
@@ -197,14 +220,18 @@
         } else { top = e.t1; sub = e.fi ? '' : e.t2; }
         d.appendChild(document.createTextNode(top));
         if (sub) { d.appendChild(document.createElement('br')); var sm = el('small', '', sub); sm.style.fontSize = '.6em'; d.appendChild(sm); }
+        if (e.preu) d.appendChild(el('span', 'badge price', e.preu));   // precio justo debajo de la fecha
         var mid = el('div', e.foto ? 'ev-body has-img' : 'ev-body');
         if (e.foto) { var im = el('img', 'ev-img'); im.src = e.foto; im.alt = e.act; im.loading = 'lazy'; mid.appendChild(im); }
-        if (e.preu) mid.appendChild(el('span', 'badge', e.preu));
-        mid.appendChild(el('h3', '', e.act));
+        // Eventos con página propia: el título y «Más info» llevan a ella
+        var own = /street/i.test(e.act) ? '/street-virayoga/' : /india/i.test(e.act) ? '/viajes-india/' : '';
+        var h3 = el('h3', '', own ? '' : e.act);
+        if (own) { var hl = el('a', '', e.act); hl.href = own; h3.appendChild(hl); }
+        mid.appendChild(h3);
         if (e.lloc) mid.appendChild(el('p', 'ev-place', e.lloc));
         if (e.desc) mid.appendChild(el('p', '', e.desc));
         var a = el('a', 'btn', e.link ? 'Reservar' : 'Más info');
-        a.href = e.link || '/contacta/'; if (e.link && !/^mailto:/i.test(e.link)) { a.target = '_blank'; a.rel = 'noopener'; }
+        a.href = e.link || own || '/contacta/'; if (e.link && !/^mailto:/i.test(e.link)) { a.target = '_blank'; a.rel = 'noopener'; }
         row.appendChild(d); row.appendChild(mid); row.appendChild(a); evBox.appendChild(row);
       });
     }).catch(function () {});
@@ -212,4 +239,75 @@
 
   // Año del footer
   var y = document.querySelector('[data-year]'); if (y) y.textContent = new Date().getFullYear();
+
+  // Formulario de contacto: «/contacta/?asunto=Viaje a India» deja elegido el asunto
+  var sel = document.querySelector('#c-asunto'), q = new URLSearchParams(location.search).get('asunto');
+  if (sel && q) {
+    for (var k = 0; k < sel.options.length; k++) if (sel.options[k].text.indexOf(q) === 0) { sel.selectedIndex = k; break; }
+  }
+
+  // Música de fondo («Jai Ganesha»). Intenta sonar sola al entrar; si el navegador no lo deja
+  // (casi siempre, hasta que la persona interactúa), arranca con el primer clic, toque o tecla.
+  // Si la persona la pausa, no vuelve a sonar sola durante la visita. Sigue entre páginas desde el mismo punto.
+  var sw = document.querySelector('[data-song]');
+  if (sw) {
+    var sb = sw.querySelector('.song-btn'), au = null, KEY = 'yca-song';
+    var toggles = document.querySelectorAll('[data-song-toggle]');
+    var saved = {};
+    try { saved = JSON.parse(sessionStorage.getItem(KEY)) || {}; } catch (e) {}
+    var stopped = !!saved.stopped;   // solo cuenta como «parada» si la persona la pausó con el botón
+    function save(p) { try { sessionStorage.setItem(KEY, JSON.stringify({ playing: p, t: au ? au.currentTime : (saved.t || 0), stopped: stopped })); } catch (e) {} }
+    function ui(p) {
+      sw.classList.toggle('on', p); sw.classList.remove('resume');
+      sb.setAttribute('aria-pressed', p ? 'true' : 'false');
+      toggles.forEach(function (b) { b.classList.toggle('on', p); b.setAttribute('aria-pressed', p ? 'true' : 'false'); });
+    }
+    function audio() {
+      if (!au) {
+        au = new Audio(sw.dataset.src); au.loop = true; au.volume = .5; au.preload = 'auto';
+        au.addEventListener('loadedmetadata', function () { if (saved.t) au.currentTime = saved.t; }, { once: true });
+        au.addEventListener('play', function () { ui(true); save(true); });
+        au.addEventListener('pause', function () { ui(false); });
+      }
+      return au;
+    }
+    var GESTURES = ['pointerdown', 'mousedown', 'touchend', 'click', 'keydown'];
+    function unwait() { GESTURES.forEach(function (ev) { document.removeEventListener(ev, onGesture, true); }); }
+    function onGesture(e) {
+      // Si el gesto es sobre el propio botón, ya lo gestiona toggle()
+      if (e.target.closest && (e.target.closest('.song-btn') || e.target.closest('[data-song-toggle]'))) { unwait(); return; }
+      var a = audio();
+      if (!a.paused) { unwait(); return; }
+      // Solo dejamos de escuchar cuando de verdad ha empezado a sonar
+      a.play().then(unwait).catch(function () {});
+    }
+    function toggle() {
+      unwait(); var a = audio();
+      if (a.paused) { stopped = false; a.play().catch(function () {}); }
+      else { stopped = true; a.pause(); save(false); }
+    }
+    sb.addEventListener('click', toggle);
+    toggles.forEach(function (b) { b.addEventListener('click', toggle); });
+    if (!stopped) {
+      audio().play().catch(function () {
+        sw.classList.add('resume');
+        GESTURES.forEach(function (ev) { document.addEventListener(ev, onGesture, true); });
+      });
+    }
+    // Mientras suena un vídeo, la canción se calla; cuando el vídeo se pausa o termina, vuelve
+    var playingVideos = [], pausedForVideo = false;
+    document.addEventListener('yca:video', function (e) {
+      var el = e.detail.el, i = playingVideos.indexOf(el);
+      if (e.detail.state === 'play') {
+        if (i < 0) playingVideos.push(el);
+        if (au && !au.paused) { pausedForVideo = true; au.pause(); }
+        else if (!au || au.paused) { if (sw.classList.contains('resume') && !stopped) pausedForVideo = true; }
+        unwait();
+      } else {
+        if (i >= 0) playingVideos.splice(i, 1);
+        if (!playingVideos.length && pausedForVideo && !stopped) { pausedForVideo = false; audio().play().catch(function () {}); }
+      }
+    });
+    window.addEventListener('pagehide', function () { if (au) save(pausedForVideo || !au.paused); });
+  }
 })();
