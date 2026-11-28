@@ -462,4 +462,4 @@ a.post{color:inherit;text-decoration:none}
 @media(min-width:1025px){.testimonials:not(:has(.yt-t:nth-child(5))){justify-content:center}}
 @media(max-width:760px){.testimonials .t.yt-t{flex:0 0 200px}}
 .yt-block + .yt-block{margin-top:28px}
-.event .date .badge.price{display:table;margin:8px 0 0;font-family:var(--sans);font-size:.62rem;line-height:1.6}
+.event .date .badge.price{display:block;background:none;color:var(--ink);padding:0;border-radius:0;margin:6px 0 0;font-family:var(--sans);font-size:.85rem;font-weight:600;letter-spacing:1px;line-height:1.4}
