@@ -352,7 +352,7 @@ def sobre():
 
 <article class="narrow content">
   <h2 id="virayoga">Virayoga</h2>
-  <p>Es mi método y mi forma de entender el yoga: Hatha Yoga, artes marciales y psicología aplicada en un mismo sistema de 9 sesiones. Ya hay 25 profesoras formadas y una comunidad que no para de crecer.</p>
+  <p>Es mi método y mi forma de entender el yoga: Hatha Yoga, artes marciales y psicología aplicada en un mismo sistema de 9 sesiones. Desde 2015 formando profesoras que hoy enseñan Virayoga, y una comunidad que no para de crecer.</p>
   <p><a class="btn" href="/virayoga/">Conoce la formación</a></p>
 
   <h2 id="viajes">Viajes a India</h2>
