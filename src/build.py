@@ -907,12 +907,14 @@ YT_CHANNEL = 'https://www.youtube.com/@yogaconarjuna'
 YT_CHANNEL_ID = 'UCvABr1XkDwI3JPWX3LcYajw'   # la lista de subidas del canal es el mismo id empezando por «UU»
 # Para añadir contenido, añade una línea a POSTS:
 #   ('practica', 'ID_YOUTUBE', 'Título', 'Descripción corta')   → Clases y prácticas
-#   ('directo',  'ID_YOUTUBE', 'Título', 'Descripción corta')   → Directos de Instagram (subidos a YouTube, aunque sea como «no listados»)
+#   ('directo',  'ID_YOUTUBE', 'Título', 'Descripción corta')   → Un Té con Arjuna destacado
 #   ('articulo', 'imagen.jpg', 'Título', 'Descripción corta', '/blog/slug/')   → Artículos
 POSTS = [
     ('practica', 'lozwmWKLfSU', 'Una práctica de Virayoga', 'Yoga y artes marciales en movimiento: así es una sesión de Virayoga.'),
 ]
-BLOG_CATS = [('practica', 'Clases y prácticas'), ('directo', 'Té con Arjuna (directos)'), ('articulo', 'Artículos')]
+BLOG_CATS = [('practica', 'Clase o práctica'), ('directo', 'Té con Arjuna'), ('articulo', 'Artículo')]
+# Enlace a los «Té con Arjuna» en YouTube. Si hay una lista de reproducción, pon aquí su enlace.
+TE_CON_ARJUNA = YT_CHANNEL + '/search?query=T%C3%A9%20con%20Arjuna'
 
 def blog():
     cards = ''
@@ -927,35 +929,40 @@ def blog():
   <div class="video wide" data-yt="{ref}" data-title="{html.escape(title)}" style="background-image:url(https://i.ytimg.com/vi/{ref}/hqdefault.jpg)"><button aria-label="Reproducir: {html.escape(title)}">{ICON['play']}</button></div>
   <div class="body"><span class="tag">{tag}</span><h3>{title}</h3><p>{desc}</p></div>
 </article>'''
-    # Tarjetas «próximamente» para las categorías que aún no tienen contenido
-    soon = {'practica': ('vira-equilibrio.jpg', 'Más prácticas en camino', 'Nuevas clases y prácticas guiadas para hacer en casa.'),
-            'directo': ('arjuna-templo.jpg', 'Té con Arjuna', 'Los directos de Instagram, ahora guardados aquí para verlos cuando quieras.')}
-    have = {p[0] for p in POSTS}
-    for t, (img, title, desc) in soon.items():
-        if t not in have or t == 'practica':
-            cards += f'''<article class="post reveal soon-card" data-type="{t}"><div class="img" style="background-image:url(/img/{img})" role="img" aria-label="{html.escape(title)}"></div>
-  <div class="body"><span class="tag">{dict(BLOG_CATS)[t]}</span><h3>{title}</h3><p>{desc}</p><span class="soon">Próximamente</span></div></article>'''
-    # «Artículos» solo aparece cuando haya alguno (en la reunión se acordó que no es prioritario)
-    cats = [(k, v) for k, v in BLOG_CATS if k != 'articulo' or 'articulo' in have]
-    filters = '<button class="on" data-f="all">Todo</button>' + ''.join(f'<button data-f="{k}">{v}</button>' for k, v in cats)
+    featured = f'''
+  <div class="narrow center" style="margin-top:56px"><h2 class="script-title">Para empezar</h2>
+    <p>Si es tu primera vez con el Virayoga, empieza por aquí.</p></div>
+  <div class="posts">{cards}</div>''' if cards else ''
     uploads = 'UU' + YT_CHANNEL_ID[2:]
     body = f'''
 <section class="wrap content blog">
   <div class="narrow center">
     <h2 class="script-title">La biblioteca del guerrero</h2>
-    <p class="lead">Recursos gratuitos para practicar Virayoga desde donde estés: clases, prácticas y los directos del Té con Arjuna.</p>
+    <p class="lead">Todo lo que comparto gratis, en un solo sitio: clases para practicar en casa, charlas con un té en la mano y música para el alma. Elige por dónde empiezas.</p>
   </div>
 
   <div class="yt-block reveal">
     <div class="yt-text">
       <span class="yt-logo">{ICON['yt']}</span>
       <h3>Canal Yoga con Arjuna</h3>
-      <p>Aquí tienes los últimos vídeos del canal. Suscríbete para no perderte ninguna práctica nueva.</p>
-      <p><a class="btn yt-btn" href="{YT_CHANNEL}?sub_confirmation=1" target="_blank" rel="noopener">{ICON['yt']} Suscríbete</a> &nbsp; <a class="btn ghost" href="{YT_CHANNEL}/videos" target="_blank" rel="noopener">Ver todos los vídeos</a></p>
+      <p>Las clases y prácticas de Virayoga, listas para hacer desde tu esterilla cuando quieras. Yoga, artes marciales y presencia: tú pones las ganas.</p>
+      <p><a class="btn yt-btn" href="{YT_CHANNEL}?sub_confirmation=1" target="_blank" rel="noopener">{ICON['yt']} Suscríbete</a> &nbsp; <a class="btn ghost" href="{YT_CHANNEL}/videos" target="_blank" rel="noopener">Ver todas las clases</a></p>
     </div>
     <div class="video wide" data-yt-list="{uploads}" data-title="Últimos vídeos de Yoga con Arjuna" style="background-image:url(/img/vira-mar.jpg)">
-      <button aria-label="Ver los últimos vídeos del canal">{ICON['play']}</button><div class="cap">Últimos vídeos del canal</div>
+      <button aria-label="Ver los últimos vídeos del canal">{ICON['play']}</button><div class="cap">Últimas clases del canal</div>
     </div>
+  </div>
+
+  <div class="yt-block reveal">
+    <div class="yt-text">
+      <span class="yt-logo">{ICON['yt']}</span>
+      <h3>Té con Arjuna</h3>
+      <p>Mi videoblog: charlas tranquilas, con un té delante, sobre todo lo que me remueve. Yoga, India, actitud, miedos, relaciones, el día a día… De lo que surja, sin guion y sin ir de gurú.</p>
+      <p><a class="btn" href="{TE_CON_ARJUNA}" target="_blank" rel="noopener">Ver los Té con Arjuna</a></p>
+    </div>
+    <a class="video wide link" href="{TE_CON_ARJUNA}" target="_blank" rel="noopener" aria-label="Ver los Té con Arjuna en YouTube" style="background-image:url(/img/arjuna-templo.jpg)">
+      <span class="play" aria-hidden="true">{ICON['play']}</span><div class="cap">Charlas en YouTube</div>
+    </a>
   </div>
 
   <div class="yt-block reveal">
@@ -965,17 +972,15 @@ def blog():
       <p>Mantras, guitarra y voz: el canal de música de Arjuna. Dale al play y deja que la cabeza se calle un rato.</p>
       <p><a class="btn yt-btn" href="{YT_MUSIC}?sub_confirmation=1" target="_blank" rel="noopener">{ICON['yt']} Suscríbete</a> &nbsp; <a class="btn ghost" href="{YT_MUSIC}/videos" target="_blank" rel="noopener">Ver el canal</a></p>
     </div>
-    <div class="video wide" data-yt-list="{'UU' + YT_MUSIC.rstrip('/').split('/')[-1][2:]}" data-title="Bhakti, música de Arjuna" style="background-image:url(/img/arjuna-templo.jpg)">
+    <div class="video wide" data-yt-list="{'UU' + YT_MUSIC.rstrip('/').split('/')[-1][2:]}" data-title="Bhakti, música de Arjuna" style="background-image:url(/img/vira-equilibrio.jpg)">
       <button aria-label="Escuchar la música de Arjuna">{ICON['play']}</button><div class="cap">Escucha la música Bhakti</div>
     </div>
   </div>
-
-  <div class="filters" role="tablist">{filters}</div>
-  <div class="posts">{cards}</div>
+{featured}
 </section>
 {newsletter('newsletter-blog')}'''
-    page('/blog/', 'Biblioteca · Clases y prácticas gratuitas de Virayoga · Yoga con Arjuna',
-         'Recursos gratuitos de Virayoga: clases y prácticas en vídeo, los directos del Té con Arjuna y el canal de YouTube de Arjuna.',
+    page('/blog/', 'Biblioteca · Clases de Virayoga, Té con Arjuna y música Bhakti · Yoga con Arjuna',
+         'Clases y prácticas gratuitas de Virayoga en YouTube, el videoblog Té con Arjuna y la música Bhakti de Arjuna, todo en un solo sitio.',
          body, hero='vira-mar.jpg', hero_title='Biblioteca', crumb='Biblioteca', image='vira-mar.jpg')
 
 # ---------------------------------------------------------------- LEGALES Y GRACIAS
