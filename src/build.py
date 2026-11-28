@@ -27,7 +27,7 @@ NAV = [
     ('Contacta', '/contacta/'),
 ]
 # Páginas que no están en el menú pero se marcan como parte de una sección
-NAV_PARENT = {'/mi-libro/': '/sobre-mi-creador-de-virayoga/', '/viajes-india/': '/agenda/', '/servicios-de-virayoga/': '/agenda/'}
+NAV_PARENT = {'/mi-libro/': '/sobre-mi-creador-de-virayoga/', '/viajes-india/': '/agenda/', '/servicios-de-virayoga/': '/agenda/', '/street-virayoga/': '/agenda/'}
 
 # Canción de fondo (Bhakti). El reproductor nunca arranca solo: la persona pulsa «play».
 SONG = dict(src='/audio/jai-ganesha.mp3', title='Jai Ganesha', artist='Arjuna')
@@ -591,6 +591,62 @@ def viajes_india():
          'Viaja a la India profunda con Arjuna: unos 15 días con más de 15 años de experiencia guiando grupos. No es un retiro, es un viaje que te cambia por dentro.',
          body, hero='india-arcos-2.jpg', hero_title='Viajes a India', crumb='<a href="/agenda/">Agenda y actividades</a> / Viajes a India', image='india-jaipur.jpg', schema=trip)
 
+# ---------------------------------------------------------------- STREET VIRAYOGA (página propia, desde la agenda)
+# Fotos: añade más en src/img/ y ponlas en STREET_FOTOS. Las de otras webs se cargan sin «referer».
+STREET_FOTOS = [
+    ('/img/ag-street.jpg', 'Street Virayoga en la Plaça Reial de Barcelona'),
+    ('https://content.timeout.es/medio/images/105/308/105308961.w1920.h1080.jpg', 'Street Virayoga en Barcelona (foto: Time Out)'),
+    ('https://a1.elespanol.com/metropoliabierta/2018/10/26/vivir-en-barcelona/vivir_en_barcelona_348475164_10556554_1706x960.jpg', 'Street Virayoga en las calles de Barcelona (foto: Metrópoli Abierta)'),
+]
+
+def street_virayoga():
+    faq = [
+        ('¿Cuánto cuesta?', 'Nada. Street Virayoga es gratuito: lo hacemos para que cualquiera pueda probar el Virayoga.'),
+        ('¿Necesito experiencia?', 'No. Vienen personas que no han hecho yoga nunca y profes con años de práctica. Cada uno va a su ritmo.'),
+        ('¿Qué tengo que traer?', 'Tu esterilla, ropa cómoda y agua. Si tienes amigos con ganas, tráetelos también.'),
+        ('¿Y si llueve?', 'Si el tiempo no acompaña, lo avisamos en Instagram y en la agenda.'),
+    ]
+    faq_html = ''.join(f'<details class="faq-item"><summary>{q}</summary><p>{a}</p></details>' for q, a in faq)
+    fotos = ''.join(f'<img src="{u}" alt="{html.escape(t)}" loading="lazy"{" referrerpolicy=\"no-referrer\"" if u.startswith("http") else ""}>' for u, t in STREET_FOTOS)
+    body = f'''
+<article class="narrow content">
+  <h2 class="quote-title">El yoga sale a la calle</h2>
+  <p class="lead">Una esterilla, una plaza y un montón de gente con ganas. Así de sencillo es Street Virayoga: una práctica gratuita al aire libre en la Plaça Reial de Barcelona.</p>
+  <p>Nació con una idea clara: sacar el yoga de las salas y llevarlo a donde está la vida. Vecinos, turistas, curiosos que pasaban por allí y alumnos de siempre, todos en la misma plaza, moviéndose a la vez. Sin postureo y sin necesidad de ser flexible.</p>
+  <p>Practicamos Virayoga: Hatha Yoga y artes marciales en los 360º de la esterilla. Te mueves, sudas un poco, te ríes bastante y te vas a casa con la cabeza más limpia y la sensación de haber compartido algo bonito.</p>
+  <div class="gallery reveal">{fotos}</div>
+
+  <h2>Cuándo y dónde</h2>
+  <ul>
+    <li><strong>Dónde:</strong> Plaça Reial, Barcelona.</li>
+    <li><strong>Cuándo:</strong> el primer sábado de cada mes. Las próximas fechas están en la <a href="/agenda/">agenda</a>.</li>
+    <li><strong>Precio:</strong> gratuito.</li>
+    <li><strong>Para quién:</strong> para todo el mundo, tengas o no experiencia.</li>
+  </ul>
+  <div class="buy-box reveal">
+    <h3>¿Te apuntas?</h3>
+    <p>Escríbeme y te aviso de la próxima quedada. Solo trae tu esterilla.</p>
+    <p><a class="btn" href="/contacta/?asunto=Street%20Virayoga">Quiero venir</a> &nbsp; <a class="btn ghost" href="https://wa.me/{WHATSAPP}?text=Hola%20Arjuna%2C%20quiero%20venir%20al%20Street%20Virayoga" target="_blank" rel="noopener">WhatsApp</a></p>
+  </div>
+
+  <h2>Lo que han contado de Street Virayoga</h2>
+  <ul>
+    <li><a href="https://metropoliabierta.elespanol.com/vivir-en-barcelona/20181026/street-virayoga-el-yoga-llega-las-calles-de-bcn/348465243_0.html" target="_blank" rel="noopener">Metrópoli Abierta: «Street Virayoga: el yoga llega a las calles de BCN»</a></li>
+    <li><a href="https://www.timeout.es/barcelona/que-hacer/street-virayoga_71915" target="_blank" rel="noopener">Time Out Barcelona: Street Virayoga</a></li>
+    <li><a href="https://www.quehacerenbcn.com/es/entrevistas/arjuna-quiero-conquistar-barcelona-con-el-virayoga" target="_blank" rel="noopener">Qué hacer en Barcelona: «Quiero conquistar Barcelona con el Virayoga»</a></li>
+  </ul>
+
+  <h2>Preguntas frecuentes</h2>
+  <div class="faq">{faq_html}</div>
+</article>
+{testimonials_html('Así se vive un Street Virayoga', kinds=('taller',), lead='Lo que cuentan quienes han practicado con nosotros.')}
+{newsletter()}'''
+    ev = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
+        {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]}
+    page('/street-virayoga/', 'Street Virayoga · Yoga gratis en la Plaça Reial de Barcelona · Yoga con Arjuna',
+         'Street Virayoga: práctica gratuita de Virayoga al aire libre en la Plaça Reial de Barcelona, el primer sábado de cada mes. Para todos los niveles.',
+         body, hero='cab-agenda.jpg', hero_title='Street Virayoga', crumb='<a href="/agenda/">Agenda y actividades</a> / Street Virayoga', image='ag-street.jpg', schema=ev)
+
 # ---------------------------------------------------------------- AGENDA Y ACTIVIDADES
 def agenda():
     def card(img, title, html_body):
@@ -602,7 +658,7 @@ def agenda():
   <div class="events" data-sheet="{html.escape(AGENDA_CSV)}">
     <div class="event reveal">
       <div class="date">12 dic<br><small style="font-size:.6em">2026 · 11 h</small><span class="badge price">Gratuito</span></div>
-      <div><h3>Street Virayoga en Plaça Reial (Barcelona)</h3><p>Práctica de Virayoga al aire libre. ¡Solo trae tu esterilla!</p></div>
+      <div><h3><a href="/street-virayoga/">Street Virayoga en Plaça Reial (Barcelona)</a></h3><p>Práctica de Virayoga al aire libre. ¡Solo trae tu esterilla! <a href="/street-virayoga/">Más info</a></p></div>
       <a class="btn" href="mailto:{EMAIL}?subject=Street%20Virayoga%2012%20diciembre">Apuntarme</a>
     </div>
     <div class="event reveal">
@@ -624,7 +680,7 @@ def agenda():
 
   <h2 class="cat">Eventos</h2>
   <div class="ag-cards">
-    {card('ag-street.jpg', 'Street Virayoga', '<p>Práctica de Virayoga gratuita en la Plaça Reial de Barcelona, el primer sábado de cada mes. Al aire libre, con gente de todas partes y buen rollo. ¡Solo trae tu esterilla!</p>')}
+    {card('ag-street.jpg', 'Street Virayoga', '<p>Práctica de Virayoga gratuita en la Plaça Reial de Barcelona, el primer sábado de cada mes. Al aire libre, con gente de todas partes y buen rollo. ¡Solo trae tu esterilla!</p><p><a class="btn" href="/street-virayoga/">Conoce Street Virayoga</a></p>')}
     {card('ag-tenerife.jpg', 'Talleres y masterclasses', '<p>Talleres por toda España (Tenerife, Murcia…) y masterclasses en escuelas. Mira las fechas arriba o lleva el Virayoga a tu centro.</p><p><a class="btn ghost" href="/servicios-de-virayoga/">Contrátame</a></p>')}
   </div>
 
@@ -1131,8 +1187,8 @@ if __name__ == '__main__':
     for folder in ('video', 'audio'):
         if os.path.isdir(os.path.join(HERE, folder)):
             shutil.copytree(os.path.join(HERE, folder), os.path.join(OUT, folder))
-    home(); sobre(); libro(); virayoga(); actividades(); viajes_india(); agenda(); prensa(); productos(); blog(); test_guerrero(); contacta(); legales()
-    urls = [DOMAIN + p for p in ['/', '/sobre-mi-creador-de-virayoga/', '/mi-libro/', '/virayoga/', '/servicios-de-virayoga/', '/viajes-india/',
+    home(); sobre(); libro(); virayoga(); actividades(); viajes_india(); street_virayoga(); agenda(); prensa(); productos(); blog(); test_guerrero(); contacta(); legales()
+    urls = [DOMAIN + p for p in ['/', '/sobre-mi-creador-de-virayoga/', '/mi-libro/', '/virayoga/', '/servicios-de-virayoga/', '/viajes-india/', '/street-virayoga/',
                                  '/agenda/', '/prensa/', '/productos/', '/blog/', '/test-guerrero/', '/contacta/', '/aviso-legal/', '/politica-de-privacidad/',
                                  '/politica-de-cookies/', '/condiciones-de-compra/']]
     extras(urls)

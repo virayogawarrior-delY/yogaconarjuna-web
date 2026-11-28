@@ -218,11 +218,15 @@
         if (e.preu) d.appendChild(el('span', 'badge price', e.preu));   // precio justo debajo de la fecha
         var mid = el('div', e.foto ? 'ev-body has-img' : 'ev-body');
         if (e.foto) { var im = el('img', 'ev-img'); im.src = e.foto; im.alt = e.act; im.loading = 'lazy'; mid.appendChild(im); }
-        mid.appendChild(el('h3', '', e.act));
+        // Eventos con página propia: el título y «Más info» llevan a ella
+        var own = /street/i.test(e.act) ? '/street-virayoga/' : /india/i.test(e.act) ? '/viajes-india/' : '';
+        var h3 = el('h3', '', own ? '' : e.act);
+        if (own) { var hl = el('a', '', e.act); hl.href = own; h3.appendChild(hl); }
+        mid.appendChild(h3);
         if (e.lloc) mid.appendChild(el('p', 'ev-place', e.lloc));
         if (e.desc) mid.appendChild(el('p', '', e.desc));
         var a = el('a', 'btn', e.link ? 'Reservar' : 'Más info');
-        a.href = e.link || '/contacta/'; if (e.link && !/^mailto:/i.test(e.link)) { a.target = '_blank'; a.rel = 'noopener'; }
+        a.href = e.link || own || '/contacta/'; if (e.link && !/^mailto:/i.test(e.link)) { a.target = '_blank'; a.rel = 'noopener'; }
         row.appendChild(d); row.appendChild(mid); row.appendChild(a); evBox.appendChild(row);
       });
     }).catch(function () {});
