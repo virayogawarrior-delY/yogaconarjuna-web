@@ -686,7 +686,10 @@ def prensa():
         contain = ' contain' if img in ('p-agentek', 'p-yoganimate', 'p-luces') else ''
         link = f'<a class="more" href="{u}" target="_blank" rel="noopener">{l} →</a>' if u else (f'<span class="paper">«{l}»</span>' if l else '')
         src = img if img.startswith('http') else f'/img/{img}' if '.' in img else f'/img/{img}.jpg'
-        items += f'<div class="press-item reveal"><div class="thumb{contain}" style="background-image:url({src})" role="img" aria-label="{html.escape(t)}"></div><h3>{t}</h3><p>{d}</p>{link}</div>'
+        # Las fotos de otras webs se cargan sin «referer» (algunos periódicos bloquean las fotos enlazadas desde fuera)
+        thumb = (f'<div class="thumb"><img src="{src}" alt="{html.escape(t)}" loading="lazy" referrerpolicy="no-referrer"></div>' if img.startswith('http')
+                 else f'<div class="thumb{contain}" style="background-image:url({src})" role="img" aria-label="{html.escape(t)}"></div>')
+        items += f'<div class="press-item reveal">{thumb}<h3>{t}</h3><p>{d}</p>{link}</div>'
     body = f'''
 <div class="wrap content">
   <div class="narrow" style="padding:0">
