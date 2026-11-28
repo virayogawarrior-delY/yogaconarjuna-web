@@ -504,13 +504,13 @@ def actividades():
     services = [
         ('studio-1.jpg', 'Escuelas de yoga', 'Masterclasses y talleres de Virayoga para tu escuela: tu alumnado prueba algo que no ha visto nunca y tú le das un empujón a tu centro.'),
         ('vira-equilibrio.jpg', 'Empresas', 'Sesiones para equipos que necesitan moverse, soltar tensión y ganar foco. Cuerpo y cabeza en la misma sala, por fin.'),
-        ('arjuna-mar.jpg', 'Hoteles y eventos', 'Workshops de yoga y Virayoga para hoteles, encuentros y eventos en Barcelona y alrededores. También con música Bhakti en directo.'),
+        ('arjuna-mar.jpg', 'Hoteles, retiros y eventos', 'Workshops de yoga y Virayoga para hoteles, retiros, encuentros y eventos en Barcelona y alrededores. También con música Bhakti en directo.'),
         ('ag-street.jpg', 'Celebraciones privadas', 'Despedidas de soltera, cumpleaños o un plan distinto con amigos: una clase de yoga con artes marciales que se recuerda (y se ríe).'),
     ]
     cards = ''.join(f'<div class="ag-card reveal"><div class="img" style="background-image:url(/img/{i})" role="img" aria-label="{html.escape(t)}"></div><div class="body"><h3>{t}</h3><p>{d}</p></div></div>' for i, t, d in services)
     body = f'''
 <article class="narrow content">
-  <p class="lead">¿Quieres que lleve el Virayoga a tu escuela, a tu empresa, a tu hotel o a tu celebración? Cuéntame qué tienes en mente y lo preparamos a medida.</p>
+  <p class="lead">¿Quieres que lleve el Virayoga a tu escuela, a tu empresa, a tu hotel, a tu retiro o a tu celebración? Cuéntame qué tienes en mente y lo preparamos a medida.</p>
 </article>
 <div class="wrap content ag-cats" style="padding-top:0">
   <h2 class="cat">Contrata a Arjuna</h2>
