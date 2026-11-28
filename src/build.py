@@ -442,7 +442,7 @@ def virayoga():
   <h2 class="quote-title">Formación de Virayoga</h2>
   <p class="lead">¿Qué pasaría si, en lugar de obsesionarte con tus debilidades, entrenaras tus fortalezas?</p>
   <p>El Virayoga es un sistema de yoga que une el <strong>Hatha Yoga</strong> tradicional, las <strong>artes marciales</strong> y la <strong>psicología aplicada</strong>. Trabajas todo el cuerpo en los 360º de la esterilla y, mientras tanto, la mente no tiene tiempo de irse a otra parte: estás presente sí o sí.</p>
-  <p>La formación es una sola y completa: la <strong>formación total de Virayoga</strong>. Te da una base técnica y psicológica sólida para dominar tu práctica, crear tus propias clases y llevar la actitud Vira a tu día a día.</p>
+  <p>La formación es una sola y completa: la <strong>formación de Virayoga</strong>. Te da una base técnica y psicológica sólida para dominar tu práctica, crear tus propias clases y llevar la actitud Vira a tu día a día.</p>
   <div class="gallery reveal"><img src="/img/vira-salto.jpg" alt="Patada marcial de Virayoga junto al mar" loading="lazy"><img src="/img/vira-equilibrio.jpg" alt="Postura de equilibrio de Virayoga" loading="lazy"><img src="/img/india-arcos.jpg" alt="Postura de Virayoga en un palacio de India" loading="lazy"></div>
 
   <h2>El yoga del guerrero</h2>
@@ -496,10 +496,10 @@ def virayoga():
 {hire_html()}
 {newsletter()}'''
     course = {"@context": "https://schema.org", "@type": "Course", "name": "Formación de Virayoga",
-              "description": "Formación total de Virayoga: Hatha Yoga, artes marciales y psicología aplicada en 9 sesiones. Online, con acompañamiento cercano.",
+              "description": "Formación de Virayoga: Hatha Yoga, artes marciales y psicología aplicada en 9 sesiones. Online, con acompañamiento cercano.",
               "provider": {"@type": "Person", "name": "Alberto López «Arjuna»", "url": DOMAIN + "/"}, "inLanguage": "es"}
     page('/virayoga/', 'Formación de Virayoga · Yoga, artes marciales y psicología · Yoga con Arjuna',
-         'La formación total de Virayoga: Hatha Yoga, artes marciales y psicología en 9 sesiones. Para profes de yoga, practicantes y quien empieza de cero.',
+         'La formación de Virayoga: Hatha Yoga, artes marciales y psicología en 9 sesiones. Para profes de yoga, practicantes y quien empieza de cero.',
          body, hero='cab-virayoga.jpg', hero_title='Virayoga', crumb='Formación Virayoga', image='vira-salto.jpg', schema=course)
 
 # ---------------------------------------------------------------- CONTRÁTAME (antes «Actividades»; misma dirección)
@@ -692,7 +692,7 @@ def agenda():
 
   <h2 class="cat">Formación y viajes</h2>
   <div class="ag-cards">
-    {card('vira-salto.jpg', 'Formación de Virayoga', '<p>La formación total de Virayoga: yoga, artes marciales y psicología en 9 sesiones, online y con acompañamiento cercano.</p><p><a class="btn" href="/virayoga/">Conoce la formación</a></p>')}
+    {card('vira-salto.jpg', 'Formación de Virayoga', '<p>La formación de Virayoga: yoga, artes marciales y psicología en 9 sesiones, online y con acompañamiento cercano.</p><p><a class="btn" href="/virayoga/">Conoce la formación</a></p>')}
     {card('india-jaipur-2.jpg', 'Viajes a India', '<p>Una vez al año, unos 15 días por la India profunda. No es un retiro: es un viaje que te cambia la forma de mirar.</p><p><a class="btn" href="/viajes-india/">Ver el viaje</a></p>')}
   </div>
 
@@ -770,7 +770,7 @@ def prensa():
 PRODUCTS = [
  dict(id='libro-pdf', tag='Libro en PDF', title='Libro «Conoce el Virayoga con Arjuna, el canalla del yoga» (PDF)', img='libro-portada.jpg', book=True,
       desc='Mi historia y la del Virayoga, contada sin filtros. Descarga inmediata para leer en el móvil, la tablet o el ordenador.', price='9,95 €', stripe=''),
- dict(id='formacion-virayoga', tag='Formación', title='Formación total de Virayoga', img='india-arcos-3.jpg',
+ dict(id='formacion-virayoga', tag='Formación', title='Formación de Virayoga', img='india-arcos-3.jpg',
       desc='Yoga, artes marciales y psicología en 9 sesiones. Online, por bloques, con autoevaluaciones y acompañamiento cercano.', price='XX €', stripe=''),
  dict(id='reserva-india', tag='Viaje', title='Reserva tu plaza: viaje a India', img='india-jaipur.jpg',
       desc='Paga la señal y asegura tu plaza en el próximo viaje al origen del yoga con Arjuna.', price='XX €', stripe=''),
@@ -814,7 +814,7 @@ def productos():
 {newsletter()}'''
     items = [{"@type": "ListItem", "position": i + 1, "url": f"{DOMAIN}/productos/#{p['id']}", "name": p['title']} for i, p in enumerate(PRODUCTS)]
     page('/productos/', 'Productos · Libro en PDF, formación de Virayoga y viaje a India · Yoga con Arjuna',
-         'Compra el libro «Conoce el Virayoga» en PDF, la formación total de Virayoga y reserva tu plaza en el viaje a India con Arjuna. Pago seguro.',
+         'Compra el libro «Conoce el Virayoga» en PDF, la formación de Virayoga y reserva tu plaza en el viaje a India con Arjuna. Pago seguro.',
          body, hero='hero-6.jpg', hero_title='Productos', crumb='Productos', image='libro-portada.jpg',
          schema={"@context": "https://schema.org", "@type": "ItemList", "itemListElement": items})
 
@@ -911,9 +911,9 @@ QUIZ = [
 QUIZ_RES = {
     'curso': dict(title='Biblioteca: clases y prácticas gratuitas', img='vira-mar.jpg', url='/blog/',
                   why='Empieza desde casa con las prácticas gratuitas y pon el foco en la sesión {n}, {name}, que es la que más necesitas ahora.'),
-    'manual': dict(title='Formación total de Virayoga', img='vira-salto.jpg', url='/virayoga/',
+    'manual': dict(title='Formación de Virayoga', img='vira-salto.jpg', url='/virayoga/',
                    why='Ya conoces el Virayoga: la formación te lleva a fondo por las 9 sesiones, empezando por entender bien la de {name}.'),
-    'formacion': dict(title='Formación total de Virayoga', img='india-arcos-3.jpg', url='/virayoga/',
+    'formacion': dict(title='Formación de Virayoga', img='india-arcos-3.jpg', url='/virayoga/',
                       why='Quieres enseñar: la formación te lleva por las 9 sesiones, también la de {name}, para vivirlas y transmitirlas.'),
     'intro': dict(title='Habla con Arjuna sobre la formación', img='india-arcos-3.jpg', url='/contacta/?asunto=Formación%20Virayoga',
                   why='Cuéntanos tu momento y te explicamos cómo empezar la formación, sin presiones.'),
